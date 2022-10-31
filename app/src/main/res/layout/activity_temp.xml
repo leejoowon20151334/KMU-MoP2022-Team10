@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".TempActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textSize="30dp"
+        android:text="작업용 임시페이지"/>
+    <Button
+        android:id="@+id/tempButtom_page2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메인화면(2)"/>
+    <Button
+        android:id="@+id/tempButtom_page3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식자재관리(3)"/>
+    <Button
+        android:id="@+id/tempButtom_page3_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식자재목록(3-1)"/>
+    <Button
+        android:id="@+id/tempButtom_page3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식자재검색(3-2)"/>
+    <Button
+        android:id="@+id/tempButtom_page4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="레시피검색(4)"/>
+    <Button
+        android:id="@+id/tempButtom_page5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="레시피내용(5)"/>
+    <Button
+        android:id="@+id/tempButtom_page6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="레시피추천(6)"/>
+    <Button
+        android:id="@+id/tempButtom_page7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내정보(7)"/>
+
+
+
+</LinearLayout>

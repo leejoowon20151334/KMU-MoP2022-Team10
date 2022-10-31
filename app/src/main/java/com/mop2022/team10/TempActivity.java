@@ -1,0 +1,81 @@
+package com.mop2022.team10;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class TempActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_temp);
+
+        //메인화면(2)
+        Button tempButtom_page2 = findViewById(R.id.tempButtom_page2);
+        tempButtom_page2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        //식자재관리
+        Button tempButtom_page3 = findViewById(R.id.tempButtom_page3);
+        tempButtom_page3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page3_1 = findViewById(R.id.tempButtom_page3_1);
+        tempButtom_page3_1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page3_2 = findViewById(R.id.tempButtom_page3_2);
+        tempButtom_page3_2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page4 = findViewById(R.id.tempButtom_page4);
+        tempButtom_page4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page5 = findViewById(R.id.tempButtom_page5);
+        tempButtom_page5.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page6 = findViewById(R.id.tempButtom_page6);
+        tempButtom_page6.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        Button tempButtom_page7 = findViewById(R.id.tempButtom_page7);
+        tempButtom_page7.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+}
