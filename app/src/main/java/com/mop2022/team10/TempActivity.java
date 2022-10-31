@@ -29,7 +29,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //식자재목록(3-1)
         Button tempButtom_page3_1 = findViewById(R.id.tempButtom_page3_1);
         tempButtom_page3_1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -37,7 +37,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //식자재검색(3-2)
         Button tempButtom_page3_2 = findViewById(R.id.tempButtom_page3_2);
         tempButtom_page3_2.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -45,7 +45,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //레시피검색(4)
         Button tempButtom_page4 = findViewById(R.id.tempButtom_page4);
         tempButtom_page4.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -53,7 +53,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //레시피내용(5)
         Button tempButtom_page5 = findViewById(R.id.tempButtom_page5);
         tempButtom_page5.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -61,7 +61,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //레시피추천(6)
         Button tempButtom_page6 = findViewById(R.id.tempButtom_page6);
         tempButtom_page6.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,7 +69,7 @@ public class TempActivity extends AppCompatActivity {
 
             }
         });
-
+        //내정보(7)
         Button tempButtom_page7 = findViewById(R.id.tempButtom_page7);
         tempButtom_page7.setOnClickListener(new View.OnClickListener(){
             @Override
