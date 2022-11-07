@@ -1,9 +1,26 @@
 package com.mop2022.team10.Rest;
 
+import android.util.Log;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Ingredient {
+
+    /*
+    사용예시
+
+    Ingredient ingredient = new Ingredient();
+    ArrayList<IngredientModel> ingredientList = ingredient.searchIngredient("계란");
+    for(int i=0;i<ingredientList.size();i++){
+        IngredientModel data = ingredientList.get(i);
+        Log.d("식자재_이름 : ",data.name);
+    }
+
+    // IngredientModel 내용물은 해당 파일의 최하단 IngredientModel class 참조
+
+     */
+
 
     //식자재 검색
     public ArrayList<IngredientModel> searchIngredient(String name){

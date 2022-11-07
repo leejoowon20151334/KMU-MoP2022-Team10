@@ -1,14 +1,29 @@
 package com.mop2022.team10.Rest;
 
+import android.provider.Settings;
+
 public class User {
 
+    /*
+    사용예시
+
+    User user = new User();
+    int userId = user.getUserId(ssaid);
+
+
+    SSAID : Settings.Secure.getString(getApplicationContext().getContentResolver(),
+    							Settings.Secure.ANDROID_ID);
+    		https://helloit.tistory.com/293 참조
+
+     */
+
     //회원가입 : 0일경우 실패, 그외일 경우 userid
-    public int signUp(String uuid){
+    public int signUp(String ssaid){
         return 1;
     }
 
     //회원번호 : 0일경우 실패, 그외일 경우 userid
-    public int getUserId(String uuid) {
+    public int getUserId(String ssaid) {
         return 1;
     }
 
