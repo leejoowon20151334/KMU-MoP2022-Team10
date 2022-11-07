@@ -16,6 +16,8 @@ public class User {
 
      */
 
+    //ㅁㄴㅇㅁㄴㅇㅁㅈㅎㅁㅁㅎㅈㄷ
+
     //회원가입 : 0일경우 실패, 그외일 경우 userid
     public int signUp(String ssaid){
         return 1;
