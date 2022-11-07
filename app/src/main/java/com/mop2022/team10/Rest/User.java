@@ -1,6 +1,5 @@
 package com.mop2022.team10.Rest;
 
-import android.provider.Settings;
 
 public class User {
 
