@@ -34,29 +34,39 @@
 
         <TableRow android:gravity="center">
 
-            <ImageButton
-                android:id="@+id/img_egg"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/egg" />
 
-            <ImageButton
-                android:id="@+id/img_milk"
+            <Button
+                android:id="@+id/btn_egg1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_margin="5dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/milk" />
+                android:background="@drawable/btn_shape"
+                android:drawableTop="@drawable/xml_egg"
+                android:text="계란"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
 
-            <ImageButton
-                android:id="@+id/img_pork"
+            <Button
+                android:id="@+id/btn_milk1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_margin="5dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/pork" />
+                android:background="@drawable/btn_shape"
+                android:drawableTop="@drawable/xml_milk"
+                android:text="우유"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btn_pork1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_shape"
+                android:drawableTop="@drawable/xml_pork"
+                android:text="돼지고기"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
 
         </TableRow>
 

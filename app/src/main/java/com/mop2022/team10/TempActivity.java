@@ -2,6 +2,7 @@ package com.mop2022.team10;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page3_2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), Activity_3_2.class);
+                startActivity(intent);
             }
         });
         //레시피검색(4)
