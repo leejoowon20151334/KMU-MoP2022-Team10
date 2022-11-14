@@ -2,10 +2,26 @@ package com.mop2022.team10.Rest;
 
 import android.util.Log;
 
+import com.mop2022.team10.Rest.Model.IngredientModel;
+import com.mop2022.team10.Util.RestUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Ingredient {
+
+    private RestUtil rest;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public Ingredient(){
+        rest = new RestUtil();
+    }
 
     /*
     사용예시
@@ -17,95 +33,86 @@ public class Ingredient {
         Log.d("식자재_이름 : ",data.name);
     }
 
-    // IngredientModel 내용물은 해당 파일의 최하단 IngredientModel class 참조
+    // IngredientModel 내용물은 /Rest/Model/IngredientModel 참조
 
      */
 
 
     //식자재 검색
     public ArrayList<IngredientModel> searchIngredient(String name){
-        //임시 고정값
+
         ArrayList<IngredientModel> list = new ArrayList<>();
 
-        IngredientModel model1 = new IngredientModel();
-        model1.id=1;
-        model1.name="계란";
-        model1.defaultExpiration = 27;
-        model1.unit="개";
-        model1.count=0;
-        model1.expirationDate = null;
-
-        IngredientModel model2 = new IngredientModel();
-        model2.id=2;
-        model2.name="우유";
-        model2.defaultExpiration = 10;
-        model2.unit="ml";
-        model2.count=0;
-        model2.expirationDate = null;
-
-        list.add(model1);
-        list.add(model2);
+        HashMap<String,String> val = new HashMap<>();
+        val.put("name",name);
+        JSONObject result = rest.GET("/getIngredient",val);
+        Log.d("APItest",result.toString());
+        try {
+            JSONArray data = result.getJSONArray("data");
+            list = jsonToList(data);
+        }catch (Exception e){
+            Log.d("Rest/Ingredient/searchIngredient",e.toString());
+        }
 
         return list;
     }
 
+    //내 식재료 목록(전체)
     public ArrayList<IngredientModel> userIngredient(int userId){
-        //임시 고정값
         ArrayList<IngredientModel> list = new ArrayList<>();
 
-        IngredientModel model1 = new IngredientModel();
-        model1.id=1;
-        model1.name="계란";
-        model1.defaultExpiration = 27;
-        model1.unit="개";
-        model1.count=5;
-        model1.expirationDate = LocalDate.parse("2022-11-15");
-
-        IngredientModel model2 = new IngredientModel();
-        model2.id=2;
-        model2.name="우유";
-        model2.defaultExpiration = 10;
-        model2.unit="ml";
-        model2.count=500;
-        model2.expirationDate = LocalDate.parse("2022-11-15");
-
-        IngredientModel model3 = new IngredientModel();
-        model3.id=3;
-        model3.name="땅콩";
-        model3.defaultExpiration = 365;
-        model3.unit="g";
-        model3.count=100;
-        model3.expirationDate = LocalDate.parse("2023-11-11");
-
-        IngredientModel model4 = new IngredientModel();
-        model4.id=4;
-        model4.name="식용유";
-        model4.defaultExpiration = 545;
-        model4.unit="ml";
-        model4.count=500;
-        model4.expirationDate = LocalDate.parse("2024-11-11");
-
-        list.add(model1);
-        list.add(model2);
-        list.add(model3);
-        list.add(model4);
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        JSONObject result = rest.GET("/userIngredient",val);
+        Log.d("APItest",result.toString());
+        try {
+            JSONArray data = result.getJSONArray("data");
+            list = jsonToList(data);
+        }catch (Exception e){
+            Log.d("Rest/Ingredient/userIngredient",e.toString());
+        }
 
         return list;
     }
 
+    //내 식재료 추가
     public boolean addUserIngredient(int userId, int ingredientId,int count, LocalDate expire){
-        return true;
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("ingredientId",Integer.toString(ingredientId));
+        val.put("count",Integer.toString(count));
+        val.put("expire",expire.toString());
+        JSONObject result = rest.GET("/addFavorite",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/User/addFavorite",e.toString());
+        }
+        return false;
     }
 
-    public class IngredientModel {
-        //기본정보
-        public int id;
-        public String name;
-        public int defaultExpiration;
-        public String unit;
+    public ArrayList<IngredientModel> jsonToList(JSONArray data){
+        ArrayList<IngredientModel> list = new ArrayList<>();
+        try {
+            for(int i=0;i<data.length();i++){
+                JSONObject ingredient = data.getJSONObject(i);
+                IngredientModel model = new IngredientModel();
+                model.id=ingredient.getInt("id");
+                model.name=ingredient.getString("name");
+                model.defaultExpiration = ingredient.getInt("defaultExpiration");
+                model.unit=ingredient.getString("unit");
+                model.count=ingredient.getInt("count");
+                if(ingredient.getString("expirationDate").length()>0)
+                    model.expirationDate = LocalDate.parse(ingredient.getString("expirationDate"),dateTimeFormatter);
+                list.add(model);
+            }
+        }catch (JSONException e){
+            Log.d("Rest/Ingredient/jsonToIngredientList",e.toString());
+        }
 
-        //사용자별 정보
-        public int count;
-        public LocalDate expirationDate;
+        return list;
     }
 }
