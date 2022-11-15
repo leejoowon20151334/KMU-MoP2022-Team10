@@ -1,5 +1,7 @@
 package com.mop2022.team10.Rest.Model;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class RecipeModel {
@@ -8,6 +10,7 @@ public class RecipeModel {
     public int time;
     public int difficulty;
     public String description;
+    public String img;
     public ArrayList<RecipeTypeModel> type = new ArrayList<>();
     public ArrayList<IngredientModel> ingredients = new ArrayList<>();
     public ArrayList<String> procedure = new ArrayList<>();

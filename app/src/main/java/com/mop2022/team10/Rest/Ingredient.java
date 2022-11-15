@@ -1,5 +1,6 @@
 package com.mop2022.team10.Rest;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.mop2022.team10.Rest.Model.IngredientModel;
@@ -46,8 +47,8 @@ public class Ingredient {
         HashMap<String,String> val = new HashMap<>();
         val.put("name",name);
         JSONObject result = rest.GET("/getIngredient",val);
-        Log.d("APItest",result.toString());
         try {
+            Log.d("APItest",result.toString());
             JSONArray data = result.getJSONArray("data");
             list = jsonToList(data);
         }catch (Exception e){
@@ -64,8 +65,8 @@ public class Ingredient {
         HashMap<String,String> val = new HashMap<>();
         val.put("userId",Integer.toString(userId));
         JSONObject result = rest.GET("/userIngredient",val);
-        Log.d("APItest",result.toString());
         try {
+            Log.d("APItest",result.toString());
             JSONArray data = result.getJSONArray("data");
             list = jsonToList(data);
         }catch (Exception e){
@@ -83,8 +84,8 @@ public class Ingredient {
         val.put("count",Integer.toString(count));
         val.put("expire",expire.toString());
         JSONObject result = rest.GET("/addFavorite",val);
-        Log.d("APItest",result.toString());
         try {
+            Log.d("APItest",result.toString());
             String data = result.getString("data");
             if(data.equals("success"))
                 return true;
@@ -94,18 +95,29 @@ public class Ingredient {
         return false;
     }
 
+    public Bitmap getImg(String imgId){
+        return rest.getImg(imgId);
+    }
+
     public ArrayList<IngredientModel> jsonToList(JSONArray data){
         ArrayList<IngredientModel> list = new ArrayList<>();
         try {
             for(int i=0;i<data.length();i++){
                 JSONObject ingredient = data.getJSONObject(i);
                 IngredientModel model = new IngredientModel();
-                model.id=ingredient.getInt("id");
-                model.name=ingredient.getString("name");
-                model.defaultExpiration = ingredient.getInt("defaultExpiration");
-                model.unit=ingredient.getString("unit");
-                model.count=ingredient.getInt("count");
-                if(ingredient.getString("expirationDate").length()>0)
+                if(ingredient.has("id"))
+                    model.id=ingredient.getInt("id");
+                if(ingredient.has("name"))
+                    model.name=ingredient.getString("name");
+                if(ingredient.has("defaultExpiration"))
+                    model.defaultExpiration = ingredient.getInt("defaultExpiration");
+                if(ingredient.has("unit"))
+                    model.unit=ingredient.getString("unit");
+                if(ingredient.has("count"))
+                    model.count=ingredient.getInt("count");
+                if(ingredient.has("img"))
+                    model.img=ingredient.getString("img");
+                if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0)
                     model.expirationDate = LocalDate.parse(ingredient.getString("expirationDate"),dateTimeFormatter);
                 list.add(model);
             }
