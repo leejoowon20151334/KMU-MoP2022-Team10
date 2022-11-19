@@ -20,8 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class RestUtil {
-    //private final String host = "http://dev.pinkbean.kr:8000";
-    private final String host = "http://10.0.2.2:8081";
+    private final String host = "http://dev.pinkbean.kr:8000";
+    //private final String host = "http://10.0.2.2:8081";
     private final String imgHost = "https://drive.google.com/uc?export=view&id=";
 
     public JSONObject GET(String src, HashMap<String,String> param){
