@@ -8,8 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -17,8 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class RestUtil {
-    private final String host = "http://dev.pinkbean.kr:8000";
-    //private final String host = "http://10.0.2.2:8081";
+    //private final String host = "http://dev.pinkbean.kr:8000";
+    private final String host = "http://10.0.2.2:8081";
     private final String imgHost = "https://drive.google.com/uc?export=view&id=";
 
     public JSONObject GET(String src, HashMap<String,String> param){
@@ -67,6 +70,42 @@ public class RestUtil {
             Bitmap img = BitmapFactory.decodeStream(is);
             conn.disconnect();
             return img;
+        }catch (Exception e){
+            Log.d("Rest error : ",e.toString());
+        }
+        return null;
+    }
+
+    public JSONObject PostImg(String src, String img){
+        String response = "";
+        try {
+            URL url = new URL(host+src);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type","application/json; charset=utf-8");
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            //bw.write("testtest");
+            bw.write(img);
+            bw.flush();
+            bw.close();
+
+            Charset charset = StandardCharsets.UTF_8;
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
+            String inputLine;
+            StringBuffer sb = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            br.close();
+
+            response = sb.toString();
+            conn.disconnect();
+            return parse(response);
         }catch (Exception e){
             Log.d("Rest error : ",e.toString());
         }

@@ -8,6 +8,12 @@
     android:gravity="center"
     android:orientation="vertical">
     <Button
+        android:id="@+id/recipeDetail_testCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="카메라"
+        />
+    <Button
         android:id="@+id/recipeDetail_testBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +23,7 @@
     <ImageView
         android:id="@+id/recipeDetail_testImg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="100dp"/>
 
     <TextView
         android:id="@+id/recipeDetail_test"
