@@ -35,7 +35,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page3_1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+                startActivity(intent);
             }
         });
         //식자재검색(3-2)
