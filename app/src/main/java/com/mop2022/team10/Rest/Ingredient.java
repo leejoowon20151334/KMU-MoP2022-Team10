@@ -109,7 +109,7 @@ public class Ingredient {
                     model.id=ingredient.getInt("id");
                 if(ingredient.has("name"))
                     model.name=ingredient.getString("name");
-                if(ingredient.has("defaultExpiration"))
+                if(ingredient.has("defaultExpiration") && !ingredient.getString("defaultExpiration").equals("null"))
                     model.defaultExpiration = ingredient.getInt("defaultExpiration");
                 if(ingredient.has("unit"))
                     model.unit=ingredient.getString("unit");
@@ -117,7 +117,7 @@ public class Ingredient {
                     model.count=ingredient.getInt("count");
                 if(ingredient.has("img"))
                     model.img=ingredient.getString("img");
-                if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0)
+                if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0 && !ingredient.getString("expirationDate").equals("null"))
                     model.expirationDate = LocalDate.parse(ingredient.getString("expirationDate"),dateTimeFormatter);
                 list.add(model);
             }
