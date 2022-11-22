@@ -13,6 +13,6 @@ public class IngredientModel {
     public String img;
 
     //사용자별 정보
-    public int count;
+    public double count;
     public LocalDate expirationDate;
 }
