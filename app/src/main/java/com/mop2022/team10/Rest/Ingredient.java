@@ -77,11 +77,11 @@ public class Ingredient {
     }
 
     //내 식재료 추가
-    public boolean addUserIngredient(int userId, int ingredientId,int count, LocalDate expire){
+    public boolean addUserIngredient(int userId, int ingredientId,double count, LocalDate expire){
         HashMap<String,String> val = new HashMap<>();
         val.put("userId",Integer.toString(userId));
         val.put("ingredientId",Integer.toString(ingredientId));
-        val.put("count",Integer.toString(count));
+        val.put("count",Double.toString(count));
         val.put("expire",expire.toString());
         JSONObject result = rest.GET("/addFavorite",val);
         try {
@@ -109,15 +109,15 @@ public class Ingredient {
                     model.id=ingredient.getInt("id");
                 if(ingredient.has("name"))
                     model.name=ingredient.getString("name");
-                if(ingredient.has("defaultExpiration"))
+                if(ingredient.has("defaultExpiration") && !ingredient.getString("defaultExpiration").equals("null"))
                     model.defaultExpiration = ingredient.getInt("defaultExpiration");
                 if(ingredient.has("unit"))
                     model.unit=ingredient.getString("unit");
                 if(ingredient.has("count"))
-                    model.count=ingredient.getInt("count");
+                    model.count=ingredient.getDouble("count");
                 if(ingredient.has("img"))
                     model.img=ingredient.getString("img");
-                if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0)
+                if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0 && !ingredient.getString("expirationDate").equals("null"))
                     model.expirationDate = LocalDate.parse(ingredient.getString("expirationDate"),dateTimeFormatter);
                 list.add(model);
             }
