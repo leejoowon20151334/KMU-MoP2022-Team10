@@ -2,9 +2,10 @@ package com.mop2022.team10.Rest.Model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class IngredientModel {
+public class IngredientModel implements Serializable {
     //기본정보
     public int id;
     public String name;
