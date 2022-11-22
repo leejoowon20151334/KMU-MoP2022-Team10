@@ -47,7 +47,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ImageView testImg;
     private String imageFilePath;
     private Uri photoUri;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,8 +112,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-
     private void sendTakePhotoIntent() {
         try {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -123,7 +120,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             Log.d("imageRecognition",e.toString());
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

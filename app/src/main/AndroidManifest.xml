@@ -32,9 +32,14 @@
         <activity
             android:name=".Activity_3_1"
             android:label="page 3-1" />
+        <activity android:name=".Popup_3_1" android:theme="@android:style/Theme.Dialog"/>
         <activity
             android:name=".Activity_3_2"
             android:label="page 3-2" />
+
+        <activity
+            android:name=".Activity_6"
+            android:label="page 6" />
         <activity
             android:name=".RecipeDetailActivity"
             android:exported="false" />
