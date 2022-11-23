@@ -1,6 +1,8 @@
 package com.mop2022.team10.Rest;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.mop2022.team10.Rest.Model.IngredientModel;
@@ -77,11 +79,11 @@ public class Ingredient {
     }
 
     //내 식재료 추가
-    public boolean addUserIngredient(int userId, int ingredientId,int count, LocalDate expire){
+    public boolean addUserIngredient(int userId, int ingredientId,double count, LocalDate expire){
         HashMap<String,String> val = new HashMap<>();
         val.put("userId",Integer.toString(userId));
         val.put("ingredientId",Integer.toString(ingredientId));
-        val.put("count",Integer.toString(count));
+        val.put("count",Double.toString(count));
         val.put("expire",expire.toString());
         JSONObject result = rest.GET("/addFavorite",val);
         try {
@@ -95,8 +97,12 @@ public class Ingredient {
         return false;
     }
 
-    public Bitmap getImg(String imgId){
+    /*public Bitmap getImg(String imgId){
         return rest.getImg(imgId);
+    }*/
+    public Bitmap getImg(String img){
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     public ArrayList<IngredientModel> jsonToList(JSONArray data){
@@ -114,7 +120,7 @@ public class Ingredient {
                 if(ingredient.has("unit"))
                     model.unit=ingredient.getString("unit");
                 if(ingredient.has("count"))
-                    model.count=ingredient.getInt("count");
+                    model.count=ingredient.getDouble("count");
                 if(ingredient.has("img"))
                     model.img=ingredient.getString("img");
                 if(ingredient.has("expirationDate") && ingredient.getString("expirationDate").length()>0 && !ingredient.getString("expirationDate").equals("null"))

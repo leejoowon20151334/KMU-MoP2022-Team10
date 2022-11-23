@@ -1,6 +1,8 @@
 package com.mop2022.team10.Rest;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.mop2022.team10.Rest.Model.IngredientModel;
@@ -63,8 +65,9 @@ public class Recipe {
         return recipe;
     }
 
-    public Bitmap getImg(String imgId){
-        return rest.getImg(imgId);
+    public Bitmap getImg(String img){
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     private ArrayList<RecipeModel> jsonToList(JSONArray data){
