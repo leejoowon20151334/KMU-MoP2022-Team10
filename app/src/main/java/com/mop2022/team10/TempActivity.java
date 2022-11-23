@@ -21,8 +21,11 @@ public class TempActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
+
         //식자재관리
         Button tempButtom_page3 = findViewById(R.id.tempButtom_page3);
         tempButtom_page3.setOnClickListener(new View.OnClickListener(){
