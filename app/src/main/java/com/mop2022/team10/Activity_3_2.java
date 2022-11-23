@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,8 +21,8 @@ public class Activity_3_2 extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 3-1로 다시 넘어가기 위해 3-2 종료하기
-                finish();
+                Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+                startActivity(intent);
             }
         });
 
