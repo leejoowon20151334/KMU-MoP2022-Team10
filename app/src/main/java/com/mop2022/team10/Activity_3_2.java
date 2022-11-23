@@ -38,7 +38,7 @@ public class Activity_3_2 extends AppCompatActivity {
 
 
 
-        // 검색 기능을 이용할 때
+        Bundle bundle = new Bundle();
         ArrayList<String> filterIngredient = new ArrayList<>();
         ArrayList<IngredientModel> ingredientList2 = new ArrayList<IngredientModel>();
 
@@ -46,30 +46,35 @@ public class Activity_3_2 extends AppCompatActivity {
             @Override
             public void run() {
                 Ingredient ingredient = new Ingredient();
-                ArrayList<IngredientModel> ingredientList = ingredient.searchIngredient("우유");
+                ArrayList<IngredientModel> ingredientList = ingredient.searchIngredient("");
 
-                Log.d("로그", ingredientList.get(0).name);
+                //Log.d("로그", ingredientList.get(0).name);
                 for(int i=0;i<ingredientList.size();i++) {
                     ingredientList2.add(ingredientList.get(i));
-
+                    //Log.d("로그2"+i, ingredientList2.get(i).name);
                 }
+                bundle.putSerializable("ingredient", ingredientList2);
+                //Log.d("로그2", ingredientList2.get(0).name);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                TableFragment1 fragment1= new TableFragment1(); // 객체 생성
+                fragment1.setArguments(bundle);
+                transaction.replace(R.id.frameLayout, fragment1); // layout, 교체될 layout
+                transaction.commit(); // commit으로 저장 하지 않으면 화면 전환이 되지 않음
             }
         });
         t.start();
 
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("ingredient", ingredientList2);
 
-        // 프래그먼트매니저를 통해 사용
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TableFragment1 fragment1= new TableFragment1(); // 객체 생성
-        fragment1.setArguments(bundle);
-        transaction.replace(R.id.frameLayout, fragment1); // layout, 교체될 layout
-        transaction.commit(); // commit으로 저장 하지 않으면 화면 전환이 되지 않음
+
+
+
+
 
         // ############################################################################ //
 
+
+        // 검색 기능을 이용할 때
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

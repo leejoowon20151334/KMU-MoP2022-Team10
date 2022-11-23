@@ -24,62 +24,17 @@
         android:layout_marginEnd="20dp"
         android:text="아이콘" />
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="60dp">
 
-        <TableRow android:gravity="center">
-
-
-            <Button
-                android:id="@+id/btn_egg1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/btn_shape"
-                android:drawableTop="@drawable/xml_egg"
-                android:text="계란"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/btn_milk1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/btn_shape"
-                android:drawableTop="@drawable/xml_milk"
-                android:text="우유"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/btn_pork1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/btn_shape"
-                android:drawableTop="@drawable/xml_pork"
-                android:text="돼지고기"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-        </TableRow>
-
-        <TableRow
+        <TableLayout
+            android:id="@+id/tl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 </RelativeLayout>
