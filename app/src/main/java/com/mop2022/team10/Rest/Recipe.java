@@ -110,6 +110,7 @@ public class Recipe {
                         ingredientModel.defaultExpiration = ingredient.getInt("defaultExpiration");
                         ingredientModel.unit = ingredient.getString("unit");
                         ingredientModel.img = ingredient.getString("img");
+                        ingredientModel.count = ingredient.getDouble("count");
                         model.ingredients.add(ingredientModel);
                     }
                 }
