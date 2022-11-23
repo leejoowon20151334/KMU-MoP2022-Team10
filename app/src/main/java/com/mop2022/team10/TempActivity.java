@@ -80,7 +80,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page7.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), UserInfo.class);
+                startActivity(intent);
             }
         });
     }
