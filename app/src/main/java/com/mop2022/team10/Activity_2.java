@@ -1,9 +1,11 @@
 package com.mop2022.team10;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -15,26 +17,29 @@ import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 import com.mop2022.team10.Rest.Model.RecipeModel;
 import com.mop2022.team10.Rest.Recipe;
+import com.mop2022.team10.Rest.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Activity_2 extends AppCompatActivity {
 
     ImageButton ManagementBtn;
 
-    //SharedPreferences pref = getSharedPreferences("userId",0);
-    //int userId = pref.getInt("userId",1);
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page2);
 
-        int userId = 1;
+        SharedPreferences pref = getSharedPreferences("userId",0);
+        userId = pref.getInt("userId",1);
+
 
         ManagementBtn = (ImageButton) findViewById(R.id.gotoManagement);
 
@@ -42,7 +47,8 @@ public class Activity_2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Activity_3.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -62,7 +68,6 @@ public class Activity_2 extends AppCompatActivity {
                         Recipe recipe = new Recipe();
                         RecipeModel result;
                         Random randomN = new Random();
-
 
                         int id;
                         while(true){
@@ -144,6 +149,7 @@ public class Activity_2 extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), Activity_4.class);
                     intent.putExtra("검색된레시피",searchedRecipe);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -161,6 +167,7 @@ public class Activity_2 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Activity_6.class);
                 startActivity(intent);
+                finish();
             }
         });
 

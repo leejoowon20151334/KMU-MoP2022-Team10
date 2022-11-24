@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,26 +25,27 @@ public class Activity_1 extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("userId", 0);
         SharedPreferences.Editor editor = pref.edit();
-        String ssaid = Settings.Secure.getString(getApplicationContext().getContentResolver(),Settings.Secure.ANDROID_ID);
+        ssaid = Settings.Secure.getString(getApplicationContext().getContentResolver(),Settings.Secure.ANDROID_ID);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 User user = new User();
-                runOnUiThread(new Runnable() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void run() {
-                    }
-                });
+                if(user.signUp(ssaid) == 0) {
+                    userId = 1;
+                }
+                else{
+                    userId = user.getUserId(ssaid);
+                }
             }
         });
         t.start();
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                editor.putInt("userId",userId);
+                editor.apply();
                 Intent intent = new Intent(Activity_1.this, Activity_2.class);
                 startActivity(intent);
             }
