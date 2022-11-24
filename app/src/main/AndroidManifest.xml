@@ -28,24 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity_3_2"
-            android:label="page 3-2"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
-        <activity
-        android:name=".Activity_4"
-        android:label="page 4"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.SEARCH" />
-        </intent-filter>
-    </activity>
-
+            android:label="page 3-2" />
         <activity
             android:name=".RecipeDetailActivity"
             android:exported="false" />

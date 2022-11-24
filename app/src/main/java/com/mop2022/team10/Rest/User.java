@@ -90,6 +90,23 @@ public class User {
         return false;
     }
 
+    //사용자 검색 기록 등록 : 성공시 true
+    public boolean addUserSearchLog(int userId,int recipeId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("recipeId",Integer.toString(recipeId));
+        JSONObject result = rest.GET("/addUserSearchLog",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/User/addFavorite",e.toString());
+        }
+        return false;
+    }
+
     //push 등록 및 사용 : 성공시 true
     public boolean pushOn(int userId, String pushId){
         HashMap<String,String> val = new HashMap<>();

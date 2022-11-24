@@ -2,6 +2,7 @@ package com.mop2022.team10;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(),Activity_1.class);
+                startActivity(intent);
             }
         });
         //식자재관리
@@ -27,7 +29,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(),Activity_3.class);
+                startActivity(intent);
             }
         });
         //식자재목록(3-1)
@@ -35,7 +38,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page3_1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+                startActivity(intent);
             }
         });
         //식자재검색(3-2)
@@ -70,7 +74,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), Activity_6.class);
+                startActivity(intent);
             }
         });
         //내정보(7)
@@ -78,7 +83,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page7.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), UserInfo.class);
+                startActivity(intent);
             }
         });
     }

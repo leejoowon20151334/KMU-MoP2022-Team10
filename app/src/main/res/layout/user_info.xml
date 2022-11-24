@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/user_info_UserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:layout_marginTop="60dp"
+        android:text="USERNAME"/>
+
+    <Button
+        android:id="@+id/user_info_ChangeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:text="이름 변경" />
+
+    <LinearLayout
+        android:id="@+id/user_info_innerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/user_info_Fush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
+            android:text="푸쉬 설정" />
+        <Button
+            android:id="@+id/user_info_Withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원 탈퇴" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
