@@ -33,9 +33,9 @@ public class Activity_3_1 extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 3으로 이동
-//                Intent intent = new Intent(getApplicationContext(), Activity_3.class);
-//                startActivity(intent);
+                //3으로 이동
+                Intent intent = new Intent(getApplicationContext(), Activity_3.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -50,8 +50,7 @@ public class Activity_3_1 extends AppCompatActivity {
             }
         });
 
-
-            /*
+        /*
     사용예시
 
     Ingredient ingredient = new Ingredient();

@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -33,8 +34,8 @@ public class Activity_6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // ??으로 이동
-//                Intent intent = new Intent(getApplicationContext(), Activity_?.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), Activity_2.class);
+                startActivity(intent);
                 finish();
             }
         });

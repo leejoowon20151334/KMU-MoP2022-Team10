@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -73,7 +74,8 @@ public class Activity_4 extends AppCompatActivity {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 4_1 로
+                Intent intent = new Intent(getApplicationContext(), Activity_4_1.class);
+                startActivity(intent);
             }
         });
 
