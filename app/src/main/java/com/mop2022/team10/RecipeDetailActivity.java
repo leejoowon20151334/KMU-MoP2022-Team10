@@ -1,3 +1,4 @@
+
 package com.mop2022.team10;
 
 import androidx.annotation.Nullable;
@@ -49,11 +50,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Button cameraBtn;
 
     private int recipeId;
+    private int userId;
     private TextView titleText;
     private ImageView recipeImg;
+    private TextView evaluation;
     private TextView description;
     private TextView recipeTime;
     private TextView difficulty;
+    private ImageView favorite;
     private LinearLayout ingredients;
     private LinearLayout procedures;
 
@@ -67,11 +71,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
         else
             recipeId = 1;
 
+        userId = 1;
+
         titleText = findViewById(R.id.recipeDetail_titleText);
         recipeImg = findViewById(R.id.recipeDetail_recipeImg);
+        evaluation = findViewById(R.id.recipeDetail_evaluation);
         description = findViewById(R.id.recipeDetail_description);
         recipeTime = findViewById(R.id.recipeDetail_recipeTime);
         difficulty = findViewById(R.id.recipeDetail_difficulty);
+        favorite = findViewById(R.id.recipeDetail_favoriteImg);
         ingredients = findViewById(R.id.recipeDetail_ingredients);
         procedures = findViewById(R.id.recipeDetail_procedures);
 
@@ -82,12 +90,18 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 RecipeModel result = recipe.getRecipeDetail(recipeId);
                 if(result.id!=recipeId)
                     finish();
+                User user = new User();
+                boolean isFavorite = user.isFavorite(userId,recipeId);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if(result.name!=null)
                             titleText.setText(result.name);
+                        if(result.evaluation>0)
+                            evaluation.setText(Double.toString(result.evaluation));
+                        else if(result.evaluation==0)
+                            evaluation.setText("-");
                         if(result.img!=null)
                             recipeImg.setImageBitmap(recipe.getImg(result.img));
                         if(result.description!=null)
@@ -106,6 +120,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             else
                                 difficulty.setText("어려워요");
                         }
+                        if(isFavorite) {
+                            favorite.setTag("on");
+                            favorite.setImageResource(R.drawable.ic_star_fill);
+                        }
+
 
                         Context context = getApplicationContext();
 
@@ -170,6 +189,45 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+        t.start();
+
+        favorite.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(favorite.getTag().equals("on")){
+                    favoriteOff();
+                }else{
+                    favoriteOn();
+                }
+            }
+        });
+    }
+
+    private void favoriteOn(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user = new User();
+                if(user.addFavorite(userId,recipeId)){
+                    favorite.setTag("on");
+                    favorite.setImageResource(R.drawable.ic_star_fill);
+                }
+            }
+        });
+        t.start();
+    }
+
+    private void favoriteOff(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user = new User();
+                if(user.deleteFavorite(userId,recipeId)){
+                    favorite.setTag("off");
+                    favorite.setImageResource(R.drawable.ic_star_empty);
+                }
             }
         });
         t.start();
@@ -250,3 +308,4 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }*/
 
 }
+

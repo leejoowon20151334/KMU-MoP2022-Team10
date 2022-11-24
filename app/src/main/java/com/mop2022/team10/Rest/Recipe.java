@@ -120,6 +120,8 @@ public class Recipe {
                     model.time = recipe.getInt("time");
                 if(recipe.has("difficulty"))
                     model.difficulty=recipe.getInt("difficulty");
+                if(recipe.has("evaluation"))
+                    model.evaluation=recipe.getDouble("evaluation");
                 if(recipe.has("description"))
                     model.description=recipe.getString("description");
                 if(recipe.has("img"))
