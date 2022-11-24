@@ -19,7 +19,8 @@ import com.mop2022.team10.Rest.Recipe;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
-
+import android.widget.EditText;
+import android.widget.Button;
 
 public class Activity_2 extends AppCompatActivity {
 
@@ -131,7 +132,6 @@ public class Activity_2 extends AppCompatActivity {
         /*
         4.레시피 검색으로 이동
          */
-        /*
         EditText searchRecipe = (EditText) findViewById(R.id.searchTxt);
         ImageButton searchBtn = (ImageButton) findViewById(R.id.searchBtn);
 
@@ -141,58 +141,59 @@ public class Activity_2 extends AppCompatActivity {
                 String searchedRecipe = searchRecipe.getText().toString();
                 if(searchedRecipe.length()>0)
                 {
-                    Intent intent = new Intent(this,"레시피 검색 페이지");
+                    Intent intent = new Intent(getApplicationContext(), Activity_4.class);
                     intent.putExtra("검색된레시피",searchedRecipe);
                     startActivity(intent);
                 }
             }
         });
-         */
+
 
 
         /*
         6.레시피 추천 페이지로 이동
          */
-        /*
+
         Button gotoRecom = (Button) findViewById(R.id.gotorecom);
 
         gotoRecom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Activity_2.this, "레시피 추천 페이지");
+                Intent intent = new Intent(getApplicationContext(), Activity_6.class);
                 startActivity(intent);
             }
         });
-         */
+
 
 
         /*
         즐겨찾기로 이동
          */
-        /*
+
         ImageButton goToFavorite = (ImageButton) findViewById(R.id.favorites);
 
         goToFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Activity_2.this, "즐겨찾기 페이지");
+                Intent intent = new Intent(getApplicationContext(), UserInfo.class);
                 startActivity(intent);
             }
         });
-        */
+
 
         /*
         7.내 정보로 이동
          */
-        /*
+
         ImageButton goToMyInfo = (ImageButton) findViewById(R.id.myInfo);
 
         goToMyInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Activity_2.this, "내 정보 페이지");
+                Intent intent = new Intent(Activity_2.this, UserInfo.class);
+                startActivity(intent);
             }
         });
-         */
+
     }
 }

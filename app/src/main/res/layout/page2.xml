@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="50dp"
+        android:hint="레시피 검색"
         />
 
     <ImageButton
@@ -120,7 +121,6 @@
         android:layout_marginTop="570dp"
         android:background="#00000000"
         android:src="@drawable/ic_baseline_favorite_24" />
-
 
     <ImageButton
         android:id="@+id/myInfo"
