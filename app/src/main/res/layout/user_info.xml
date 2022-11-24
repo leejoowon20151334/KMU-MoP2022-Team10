@@ -25,12 +25,82 @@
         android:text="이름 변경" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:text="즐겨찾기"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:text="사용내역"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:text="평가내역"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/user_info_innerLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <LinearLayout
+                android:id="@+id/user_info_FirScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="top"
+                android:gravity="center"/>
 
+        </ScrollView>
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:padding="6dp">
+            <LinearLayout
+                android:id="@+id/user_info_SecScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="top"
+                android:gravity="center"/>
+        </ScrollView>
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:padding="6dp"
+            >
+            <LinearLayout
+                android:id="@+id/user_info_ThrScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="top"
+                android:gravity="center"/>
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout

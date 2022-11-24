@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 import com.mop2022.team10.Rest.Model.RecipeModel;
 import com.mop2022.team10.Rest.Recipe;
+import com.mop2022.team10.Rest.User;
 
 import java.util.ArrayList;
 
@@ -28,68 +30,99 @@ public class UserInfo extends AppCompatActivity {
 
     private TextView test;
     private ImageView testImg;
-    private LinearLayout lay;
+    private LinearLayout Lay;
+    private LinearLayout Lay1;
+    int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         TextView Title = findViewById(R.id.user_info_UserName);
+        //프리퍼런스 받기
 //        String name = getPreferences("userName")
         String name = "test";
         Title.setText(name);
-        lay = findViewById(R.id.user_info_innerLayout);
+        Lay = findViewById(R.id.user_info_FirScrollView);
+        Lay1 = findViewById(R.id.user_info_SecScrollView);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                User user = new User();
+                userId = user.getUserId(name);
                 Recipe recipe = new Recipe();
-                ArrayList<RecipeModel> result = recipe.getFavorite(1);
-//                Bitmap img = recipe.getImg(result.img);
+                ArrayList<RecipeModel> result = recipe.getFavorite(userId);
+//                Bitmap img = recipe.getImg(result.img);userSearchLog
+                Recipe recipe1 = new Recipe();
+                ArrayList<RecipeModel> result1 = recipe.userSearchLog(userId);
 
-                Ingredient ingredient = new Ingredient();
-                ArrayList<IngredientModel> ingredientList = ingredient.userIngredient(1);
-                Bitmap img2 = ingredient.getImg(ingredientList.get(0).img);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        StringBuilder txt = new StringBuilder(result.description);
-//                        txt.append("\n");
-//                        for(int i=0;i<result.procedure.size();i++)
-//                            txt.append(Integer.toString(i)).append(". ").append("\n").append(result.procedure.get(i));
+//                        LinearLayout la = new LinearLayout(getBaseContext());
+//                        la.setLayoutParams(params);
 
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                        Matrix m = new Matrix();
-                        Bitmap img_ = recipe.getImg(result.get(0).img);
-                        ImageView img = new ImageView(getBaseContext());
-                        img.setLayoutParams(params);
-                        img.setScaleType(ImageView.ScaleType.MATRIX);
-                        img.setImageBitmap(img_);
-                        img.setImageMatrix(m);
-                        lay.addView(img);
+                        for(int i = 0;i < result.size(); i++) {
+                            LinearLayout la = new LinearLayout(getBaseContext());
+                            LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layout_params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            layout_params.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            la.setLayoutParams(layout_params);
+                            la.setOrientation(LinearLayout.VERTICAL);
+                            Lay.addView(la);
 
-                        TextView view = new TextView(getBaseContext());
-                        view.setText(result.get(0).name);
-                        view.setLayoutParams(params);
-                        view.setTextColor(Color.rgb(0,0,0));
-                        view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-                        lay.addView(view);
+                            Bitmap img_ = recipe.getImg(result.get(i).img);
+                            ImageView img = new ImageView(getBaseContext());
+                            img.setImageBitmap(img_);
+                            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            img.setLayoutParams(new LinearLayout.LayoutParams(
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics()),
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics())));
+                            la.addView(img);
 
+                            TextView view = new TextView(getBaseContext());
+                            view.setText(result.get(i).name);
+                            view.setLayoutParams(new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT));
+                            view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            view.setTextColor(Color.rgb(0,0,0));
+                            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+                            la.addView(view);
+                        }
+                        for(int i = 0;i < result1.size(); i++) {
+                            LinearLayout la = new LinearLayout(getBaseContext());
+                            LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layout_params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            layout_params.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            la.setLayoutParams(layout_params);
+                            la.setOrientation(LinearLayout.VERTICAL);
+                            Lay1.addView(la);
 
+                            Bitmap img_ = recipe1.getImg(result1.get(i).img);
+                            ImageView img = new ImageView(getBaseContext());
+                            img.setImageBitmap(img_);
+                            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            img.setLayoutParams(new LinearLayout.LayoutParams(
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics()),
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics())));
+                            la.addView(img);
 
-
-//                        testImg.setImageBitmap(img);
-//                        test.setLayoutParams();
-//                        testImg.setLayoutParams(lay.getLayoutParams());
-//                        String txt2 = "";
-//                        TextView text2 = (TextView) findViewById(R.id.recipeDetail_test2);
-//                        ImageView testImg2 = (ImageView) findViewById(R.id.recipeDetail_testImg2);
-//                        for(int i=0;i<ingredientList.size();i++)
-//                            txt2 += ingredientList.get(i).name + ", ";
-//                        text2.setText(txt2);
-//                        testImg2.setImageBitmap(img2);
-
+                            TextView view = new TextView(getBaseContext());
+                            view.setText(result1.get(i).name);
+                            view.setLayoutParams(new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT));
+                            view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            view.setTextColor(Color.rgb(0,0,0));
+                            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+                            la.addView(view);
+                        }
                     }
                 });
             }
