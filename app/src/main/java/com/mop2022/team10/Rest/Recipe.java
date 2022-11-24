@@ -83,6 +83,24 @@ public class Recipe {
         return list;
     }
 
+    //사용자 레시피 검색내역
+    public ArrayList<RecipeModel> userSearchLog(int userId){
+
+        ArrayList<RecipeModel> list = new ArrayList<>();
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        JSONObject result = rest.GET("/userSearchLog",val);
+        try {
+            Log.d("APItest",result.toString());
+            JSONArray data = result.getJSONArray("data");
+            list = jsonToList(data);
+        }catch (Exception e){
+            Log.d("Rest/Recipe/userSearchLog",e.toString());
+        }
+
+        return list;
+    }
+
     public Bitmap getImg(String img){
         byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
