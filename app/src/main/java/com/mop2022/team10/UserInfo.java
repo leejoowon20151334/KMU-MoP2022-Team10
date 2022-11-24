@@ -1,6 +1,9 @@
 package com.mop2022.team10;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -15,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,18 +36,57 @@ public class UserInfo extends AppCompatActivity {
     private ImageView testImg;
     private LinearLayout Lay;
     private LinearLayout Lay1;
+    private LinearLayout Lay2;
     int userId;
+
+    public void userInfoOnClick(View v) {
+        switch(v.getId()) {
+            case R.id.user_info_ChangeName:
+                break;
+            case R.id.user_info_Fush:
+                // 푸쉬 알림 관련 설정
+                break;
+            case R.id.user_info_Withdrawal:
+                //회원탈퇴 버튼
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle("회원 탈퇴").setMessage("정말 탈퇴 하시겠습니까?.");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                break;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         TextView Title = findViewById(R.id.user_info_UserName);
-        //프리퍼런스 받기
-//        String name = getPreferences("userName")
-        String name = "test";
+        SharedPreferences pref = getSharedPreferences("userId", 0);
+        String name = pref.getString("userName", "test");
         Title.setText(name);
         Lay = findViewById(R.id.user_info_FirScrollView);
         Lay1 = findViewById(R.id.user_info_SecScrollView);
+        Lay2 = findViewById(R.id.user_info_ThrScrollView);
+
+
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -55,6 +98,9 @@ public class UserInfo extends AppCompatActivity {
 //                Bitmap img = recipe.getImg(result.img);userSearchLog
                 Recipe recipe1 = new Recipe();
                 ArrayList<RecipeModel> result1 = recipe.userSearchLog(userId);
+
+                Recipe recipe2 = new Recipe();
+                ArrayList<RecipeModel> result2 = recipe.getMyEvaluation(userId);
 
 
                 runOnUiThread(new Runnable() {
@@ -93,6 +139,7 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
                         }
+
                         for(int i = 0;i < result1.size(); i++) {
                             LinearLayout la = new LinearLayout(getBaseContext());
                             LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(
@@ -115,6 +162,37 @@ public class UserInfo extends AppCompatActivity {
 
                             TextView view = new TextView(getBaseContext());
                             view.setText(result1.get(i).name);
+                            view.setLayoutParams(new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT));
+                            view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            view.setTextColor(Color.rgb(0,0,0));
+                            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+                            la.addView(view);
+                        }
+
+                        for(int i = 0;i < result2.size(); i++) {
+                            LinearLayout la = new LinearLayout(getBaseContext());
+                            LinearLayout.LayoutParams layout_params = new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layout_params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            layout_params.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics());
+                            la.setLayoutParams(layout_params);
+                            la.setOrientation(LinearLayout.VERTICAL);
+                            Lay2.addView(la);
+
+                            Bitmap img_ = recipe1.getImg(result2.get(i).img);
+                            ImageView img = new ImageView(getBaseContext());
+                            img.setImageBitmap(img_);
+                            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            img.setLayoutParams(new LinearLayout.LayoutParams(
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics()),
+                                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics())));
+                            la.addView(img);
+
+                            TextView view = new TextView(getBaseContext());
+                            view.setText(result2.get(i).name);
                             view.setLayoutParams(new LinearLayout.LayoutParams(
                                     ViewGroup.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.WRAP_CONTENT));

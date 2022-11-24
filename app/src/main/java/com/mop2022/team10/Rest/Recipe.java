@@ -83,6 +83,24 @@ public class Recipe {
         return list;
     }
 
+    public ArrayList<RecipeModel> getMyEvaluation(int userId) {
+        ArrayList<RecipeModel> list = new ArrayList<>();
+        RecipeModel recipe = new RecipeModel();
+
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        JSONObject result = rest.GET("/getFavorite",val);
+        try {
+            Log.d("APItest",result.toString());
+            JSONArray data = result.getJSONArray("data");
+            list = jsonToList(data);
+        }catch (Exception e){
+            Log.d("Rest/Recipe/getFavorite",e.toString());
+        }
+
+        return list;
+    }
+
     //사용자 레시피 검색내역
     public ArrayList<RecipeModel> userSearchLog(int userId){
 
