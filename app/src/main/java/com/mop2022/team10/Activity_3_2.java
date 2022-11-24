@@ -1,12 +1,15 @@
 package com.mop2022.team10;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentTransaction;
@@ -65,12 +68,6 @@ public class Activity_3_2 extends AppCompatActivity {
         t.start();
 
 
-
-
-
-
-
-
         // ############################################################################ //
 
 
@@ -90,14 +87,30 @@ public class Activity_3_2 extends AppCompatActivity {
                     }
                 }
 
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("ingredient22", filterIngredient);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(Activity_3_2.this);
+                LayoutInflater inflater1 = getLayoutInflater();
+                dlg.setView(inflater1.inflate(R.layout.dialog,null));
+                dlg.setTitle(filterIngredient + " 추가");
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment_test fragment_test = new Fragment_test(); // 객체 생성
-                fragment_test.setArguments(bundle);
-                transaction.replace(R.id.frameLayout, fragment_test); // layout, 교체될 layout
-                transaction.commit(); // commit으로 저장 하지 않으면 화면 전환이 되지 않음
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("ingredient", filterIngredient);
+                dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
+                    }
+                });
+                dlg.setNegativeButton("취소",null);
+
+                dlg.show();
+
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                Fragment_test fragment_test = new Fragment_test(); // 객체 생성
+//                fragment_test.setArguments(bundle);
+//                transaction.replace(R.id.frameLayout, fragment_test); // layout, 교체될 layout
+//                transaction.commit(); // commit으로 저장 하지 않으면 화면 전환이 되지 않음
+
+
 
                 return true;
             }

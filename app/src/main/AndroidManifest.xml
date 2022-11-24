@@ -37,6 +37,14 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+        <activity
+        android:name=".Activity_4"
+        android:label="page 4"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+    </activity>
 
         <activity
             android:name=".RecipeDetailActivity"

@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -50,21 +53,43 @@ public class TableFragment1 extends Fragment {
 //                    img_list.add(ingredient.getImg(ingredient_test.get(k).img));
 //
 //                }
-        Log.d("로그", "s");
+
+        View.OnClickListener myListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String projectId = v.getTag().toString();
+                ImageView b = (ImageView) v;
+
+                Toast.makeText(getActivity().getApplicationContext(),projectId,Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater1 = getActivity().getLayoutInflater();
+                dlg.setView(inflater1.inflate(R.layout.dialog,null));
+                dlg.setTitle(projectId + " 추가");
+
+                dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
+                    }
+                });
+                dlg.setNegativeButton("취소",null);
+
+                dlg.show();
+            }
+        };
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < ingredient_test.size(); i += 3) {
-                    if(i == 9)
-                        break;
+
                     TableRow tableRow = new TableRow(getActivity());
                     tableRow.setLayoutParams(new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
                     tableRow.setGravity(Gravity.CENTER);
                     Log.d("로그3", ingredient_test.get(i).name);
-
 
                     for (int j = i; j < i + 3; j++) {
                         if (j == ingredient_test.size())
@@ -76,43 +101,51 @@ public class TableFragment1 extends Fragment {
 //                        btn.setOnClickListener(myListener);
 
                         //Bitmap img = ingredient.getImg("1tqbkNL0fsW75CB10XsU6_7rsWjMp00Dl");
-                        //Bitmap img = ingredient.getImg(ingredient_test.get(ind).img);
+                        String str_name = ingredient_test.get(j).name;
+                        Bitmap img = ingredient.getImg(ingredient_test.get(j).img);
                         Log.d("로그", "sssss");
 
+                        final int ind = j;
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Log.d("로그", "aaaaa");
 
-                                LinearLayout ll = new LinearLayout(getActivity());
-                                ll.setLayoutParams(new ViewGroup.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                                ll.setOrientation(LinearLayout.VERTICAL);
+//                                LinearLayout ll = new LinearLayout(getActivity());
+//                                ll.setLayoutParams(new ViewGroup.LayoutParams(
+//                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//                                ll.setOrientation(LinearLayout.VERTICAL);
 
                                 ImageView testImg = new ImageView(getActivity());
-                                //testImg.setImageDrawable(R.drawable.img_milk);
-                                //testImg.setImageBitmap(img);
+                                testImg.setTag(str_name);
+                                testImg.setOnClickListener(myListener);
+                                testImg.setImageBitmap(img);
+                                TextView name = new TextView(getActivity());
+                                name.setText(str_name);
+                                name.setTextSize(10);
+                                name.setGravity(Gravity.CENTER);
+
+//                                ll.addView(testImg);
+//                                ll.addView(name);
 
 
-                                ll.addView(testImg);
-                                tableRow.addView(ll);
+                                tableRow.addView(testImg);
+                                tableRow.addView(name);
                             }
                         });
                     }
-                    TL.addView(tableRow);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TL.addView(tableRow);
+                        }
+                    });
                 }
             }
         });
         t.start();
 
-        View.OnClickListener myListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String projectId = v.getTag().toString();
-
-            }
-        };
 
 //        for(int i=0;i<ingredient_test.size();i++)
 //        {
@@ -137,6 +170,7 @@ public class TableFragment1 extends Fragment {
                 ListFragment2 fragment2 = new ListFragment2();
                 fragment2.setArguments(bundle);
                 transaction.replace(R.id.frameLayout, fragment2);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
 

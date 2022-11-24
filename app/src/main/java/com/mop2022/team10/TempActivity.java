@@ -52,7 +52,8 @@ public class TempActivity extends AppCompatActivity {
         tempButtom_page4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), Activity_4.class);
+                startActivity(intent);
             }
         });
         //레시피내용(5)
