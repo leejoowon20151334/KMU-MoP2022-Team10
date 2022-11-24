@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mainpagebackground">
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:src="@drawable/ic_baseline_west_24"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addBtn"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="315dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btnbackground"
+        android:backgroundTint="#4381C2"
+        android:text="추가"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/roomTmp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/btnbackground"
+        android:backgroundTint="#FFE5CC"
+        android:text="실온"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/refrigeration"
+        android:layout_width="120dp"
+        android:layout_height="350dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/btnbackground"
+        android:text="냉장"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/frozen"
+        android:layout_width="120dp"
+        android:layout_height="350dp"
+        android:layout_marginLeft="233dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/btnbackground"
+        android:backgroundTint="#3399FF"
+        android:text="냉동"
+        />
+
+    <View
+        android:background="#000"
+        android:layout_width="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="3dp"
+        android:layout_marginTop="580dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="3dp"
+        android:layout_marginTop="150dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="3dp"
+        android:layout_marginTop="60dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="3dp"
+        android:layout_height="430dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="30dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="3dp"
+        android:layout_height="430dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="204dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="3dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="30dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="3dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="378dp"/>
+
+    <View
+        android:background="#000"
+        android:layout_width="3dp"
+        android:layout_height="430dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="378dp"/>
+
+</RelativeLayout>

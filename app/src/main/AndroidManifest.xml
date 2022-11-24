@@ -35,12 +35,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity_1"
+            android:label="page 1"/>
+
+        <activity android:name=".Activity_2"
+            android:label="page 2"/>
+
+        <activity android:name=".Activity_3"
+            android:label="page 3"/>
         <activity
             android:name=".Activity_3_1"
             android:label="page 3-1" />
         <activity
             android:name=".Popup_3_1"
             android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".Activity_4"
+            />
+
         <activity
             android:name=".Activity_3_2"
             android:label="page 3-2" />
