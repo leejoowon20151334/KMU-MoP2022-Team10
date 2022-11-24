@@ -71,7 +71,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         else
             recipeId = 1;
 
-        userId = 1;
+        if(getIntent().hasExtra("userId"))
+            userId = (int) getIntent().getExtras().get("userId");
+        else
+            userId = 1;
 
         titleText = findViewById(R.id.recipeDetail_titleText);
         recipeImg = findViewById(R.id.recipeDetail_recipeImg);
