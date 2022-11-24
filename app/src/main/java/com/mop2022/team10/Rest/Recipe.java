@@ -65,6 +65,22 @@ public class Recipe {
         return recipe;
     }
 
+    public boolean useRecipe(int userId,int recipeId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("recipeId",Integer.toString(recipeId));
+        JSONObject result = rest.GET("/useRecipe",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/Recipe/useRecipe",e.toString());
+        }
+        return false;
+    }
+
     public ArrayList<RecipeModel> getFavorite(int userId) {
         ArrayList<RecipeModel> list = new ArrayList<>();
         RecipeModel recipe = new RecipeModel();
