@@ -45,6 +45,7 @@ public class Activity_1 extends AppCompatActivity {
             @Override
             public void run() {
                 editor.putInt("userId",userId);
+                editor.putString("userName",ssaid);
                 editor.apply();
                 Intent intent = new Intent(Activity_1.this, Activity_2.class);
                 startActivity(intent);

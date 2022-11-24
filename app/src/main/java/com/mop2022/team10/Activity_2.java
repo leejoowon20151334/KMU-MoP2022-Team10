@@ -31,7 +31,7 @@ public class Activity_2 extends AppCompatActivity {
     ImageButton ManagementBtn;
 
     int userId;
-
+    String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,7 @@ public class Activity_2 extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("userId",0);
         userId = pref.getInt("userId",1);
-
+        userName = pref.getString("userName","test");
 
         ManagementBtn = (ImageButton) findViewById(R.id.gotoManagement);
 
