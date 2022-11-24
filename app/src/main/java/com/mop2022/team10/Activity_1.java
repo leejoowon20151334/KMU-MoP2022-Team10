@@ -16,6 +16,7 @@ import com.mop2022.team10.Rest.User;
 public class Activity_1 extends AppCompatActivity {
 
     String ssaid;
+    String userName;
     int userId;
 
     @Override
@@ -33,9 +34,11 @@ public class Activity_1 extends AppCompatActivity {
                 User user = new User();
                 if(user.signUp(ssaid) == 0) {
                     userId = 1;
+                    userName = "test";
                 }
                 else{
                     userId = user.getUserId(ssaid);
+                    userName = ssaid;
                 }
             }
         });
@@ -45,7 +48,7 @@ public class Activity_1 extends AppCompatActivity {
             @Override
             public void run() {
                 editor.putInt("userId",userId);
-                editor.putString("userName",ssaid);
+                editor.putString("userName",userName);
                 editor.apply();
                 Intent intent = new Intent(Activity_1.this, Activity_2.class);
                 startActivity(intent);
