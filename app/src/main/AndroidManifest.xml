@@ -28,6 +28,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity_1"/>
+        <activity android:name=".Activity_2"/>
+        <activity android:name=".Activity_3"/>
+        <activity android:name=".Activity_3_1"/>
+        <activity android:name=".Activity_4"/>
+        <activity android:name=".UserInfo"/>
+        <activity android:name=".Activity_6"/>
+        <activity android:name=".Activity_4"/>
+        <activity android:name=".Popup_3_1"/>
         <activity
             android:name=".Activity_3_2"
             android:label="page 3-2" />
