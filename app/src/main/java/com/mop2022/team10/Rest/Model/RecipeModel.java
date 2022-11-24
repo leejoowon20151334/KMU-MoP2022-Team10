@@ -10,6 +10,7 @@ public class RecipeModel {
     public int time;
     public int difficulty;
     public String description;
+    public double evaluation;
     public String img;
     public ArrayList<RecipeTypeModel> type = new ArrayList<>();
     public ArrayList<IngredientModel> ingredients = new ArrayList<>();
