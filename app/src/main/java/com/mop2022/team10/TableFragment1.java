@@ -43,16 +43,11 @@ public class TableFragment1 extends Fragment {
         if(getArguments() != null) {
             ingredient_test = (ArrayList<IngredientModel>) getArguments().getSerializable("ingredient");
         }
-        //Log.d("로그", ingredient_test.get(0).name);
 
         TableLayout TL = (TableLayout) view.findViewById(R.id.tl);
 
 
         Ingredient ingredient = new Ingredient();
-//                for (int k = 0; k < ingredient_test.size(); k++) {
-//                    img_list.add(ingredient.getImg(ingredient_test.get(k).img));
-//
-//                }
 
         View.OnClickListener myListener = new View.OnClickListener() {
             @Override
@@ -89,28 +84,19 @@ public class TableFragment1 extends Fragment {
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
                     tableRow.setGravity(Gravity.CENTER);
-                    Log.d("로그3", ingredient_test.get(i).name);
 
                     for (int j = i; j < i + 3; j++) {
                         if (j == ingredient_test.size())
                             break;
-                        //Log.d("로그" + j, ingredient_test.get(j).name);
-//
-//                        Button btn = new Button(getActivity());
-//                        btn.setText(ingredient_test.get(j).name);
-//                        btn.setOnClickListener(myListener);
 
-                        //Bitmap img = ingredient.getImg("1tqbkNL0fsW75CB10XsU6_7rsWjMp00Dl");
                         String str_name = ingredient_test.get(j).name;
                         Bitmap img = ingredient.getImg(ingredient_test.get(j).img);
-                        Log.d("로그", "sssss");
 
                         final int ind = j;
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Log.d("로그", "aaaaa");
-
+                                // 이미지뷰(사진)과 텍스트(이름)을 묶기 위해 레이아웃을 적용하면 화면에 나타나지 않음
 //                                LinearLayout ll = new LinearLayout(getActivity());
 //                                ll.setLayoutParams(new ViewGroup.LayoutParams(
 //                                        ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -118,6 +104,9 @@ public class TableFragment1 extends Fragment {
 //                                ll.setOrientation(LinearLayout.VERTICAL);
 
                                 ImageView testImg = new ImageView(getActivity());
+                                // 이미지뷰에 사진 크기 조절을 위한 작업을 적용하면 사진이 화면에 나타나지 않음
+//                                testImg.setLayoutParams(new LinearLayout.LayoutParams(300, 300));
+//                                testImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
                                 testImg.setTag(str_name);
                                 testImg.setOnClickListener(myListener);
                                 testImg.setImageBitmap(img);
@@ -145,18 +134,6 @@ public class TableFragment1 extends Fragment {
             }
         });
         t.start();
-
-
-//        for(int i=0;i<ingredient_test.size();i++)
-//        {
-//            Button tmpBtn = new Button(getActivity().getApplicationContext());
-//            tmpBtn.setText(ingredient_test.get(i).name);
-//            tmpBtn.setOnClickListener(myListener);
-//            TL.addView(tmpBtn);
-//        }
-
-
-
 
         btn_frag2 = view.findViewById(R.id.btn_icon1);
         btn_frag2.setOnClickListener(new View.OnClickListener() {
