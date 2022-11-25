@@ -1,26 +1,36 @@
 package com.mop2022.team10;
 
+import android.graphics.Bitmap;
+
 public class recommend {
-    private int imageResourceID;
+    private Bitmap imageResource;
     private String foodName;
     private float rate;
-    public recommend(int id, String food,float rate){
-        this.imageResourceID = id;
+    private int time;
+    private float evaluate;
+    public recommend(Bitmap id, String food,float rate,int time,float evaluate){
+        this.imageResource = id;
         this.foodName = food;
         this.rate = rate;
+        this.time = time;
+        this.evaluate = evaluate;
     }
-    public int getImageResourceID(){
-        return imageResourceID;
+    public Bitmap getImageResource(){
+        return imageResource;
     }
     public String getFoodName(){
         return foodName;
     }
     public Float getRate(){return rate;}
-    public void setImageResourceID(int imageResourceID) {
-        this.imageResourceID = imageResourceID;
+    public int getTime(){return time;}
+    public Float getEvaluate(){return evaluate;}
+    public void setImageResource(Bitmap imageResource) {
+        this.imageResource = imageResource;
     }
     public void setRate(float rate){this.rate = rate;}
     public void setFoodName(String foodName) {
         this.foodName = foodName;
     }
+    public void setTime(){this.time = time;}
+    public void setEvaluate(float evaluate) {this.evaluate = evaluate;}
 }
