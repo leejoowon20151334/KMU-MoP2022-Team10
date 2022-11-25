@@ -35,7 +35,8 @@
         <activity android:name=".Activity_4_1"/>
         <activity android:name=".UserInfo"/>
         <activity android:name=".Activity_6"/>
-        <activity android:name=".Popup_3_1"/>
+        <activity android:name=".Popup_3_1"
+            android:theme="@android:style/Theme.Dialog"/>
         <activity
             android:name=".Activity_3_2"
             android:label="page 3-2" />
