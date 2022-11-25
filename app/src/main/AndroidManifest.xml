@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".TempActivity"
+            android:name=".Activity_1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity_2"/>
+        <activity android:name=".Activity_3"/>
+        <activity android:name=".Activity_3_1"/>
+        <activity android:name=".Activity_4"/>
+        <activity android:name=".Activity_4_1"/>
+        <activity android:name=".UserInfo"/>
+        <activity android:name=".Activity_6"/>
+        <activity android:name=".Popup_3_1"
+            android:theme="@android:style/Theme.Dialog"/>
         <activity
             android:name=".Activity_3_2"
             android:label="page 3-2" />

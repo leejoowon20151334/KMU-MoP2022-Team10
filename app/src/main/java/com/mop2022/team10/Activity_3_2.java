@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,12 +32,15 @@ public class Activity_3_2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_3_2);
+
         // 뒤로가기 버튼을 눌렀을 때
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 3-1로 다시 넘어가기 위해 3-2 종료하기
+                Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+                startActivity(intent);
                 finish();
             }
         });

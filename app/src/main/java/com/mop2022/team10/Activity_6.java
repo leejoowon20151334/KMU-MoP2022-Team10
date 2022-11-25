@@ -1,5 +1,6 @@
 package com.mop2022.team10;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -38,32 +39,52 @@ public class Activity_6 extends AppCompatActivity {
                 finish();
             }
         });
-        this.InitailizeData6();
-        Comparator<recommend> sort = new Comparator<recommend>() {
-            @Override
-            public int compare(recommend recommend1, recommend recommend2) {
-                int ret = 0;
-
-                if(recommend1.getRate()<recommend2.getRate()){
-                    ret = -1;
-                }
-                else if(recommend1.getRate()==recommend2.getRate()){
-                    ret = 0;
-                }
-                else{
-                    ret = 1;
-                }
-                return ret;
-            }
-        };
-        Collections.sort(dataList6,sort);
-
+        Context context = this;
+        dataList6 = new ArrayList<>();
         RecyclerView recyclerView6 = (RecyclerView)findViewById(R.id.recyclerView1);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false);
         recyclerView6.setLayoutManager(manager);
         RecommendAdapter recommendAdapter = new RecommendAdapter(dataList6);
         recyclerView6.setAdapter(recommendAdapter);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                Recipe recipe = new Recipe();
+                for(int i=1;i<=10;i++) {
+                    RecipeModel result = recipe.getRecipeDetail(i);
+                    Bitmap img = recipe.getImg(result.img);
+                    final int ind = i;
+                    dataList6.add(new recommend(img, result.name, (float) result.difficulty, result.time, result.difficulty));
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Comparator<recommend> sort = new Comparator<recommend>() {
+                            @Override
+                            public int compare(recommend recommend1, recommend recommend2) {
+                                int ret = 0;
+
+                                if(recommend1.getRate()<recommend2.getRate()){
+                                    ret = -1;
+                                }
+                                else if(recommend1.getRate()==recommend2.getRate()){
+                                    ret = 0;
+                                }
+                                else{
+                                    ret = 1;
+                                }
+                                return ret;
+                            }
+                        };
+                        Collections.sort(dataList6,sort);
+                        recommendAdapter.notifyDataSetChanged();
+                    }
+                });
+
+            }
+        });
+        t.start();
         Button difflow = (Button) findViewById(R.id.difficultylow_Btn);
         difflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,38 +137,109 @@ public class Activity_6 extends AppCompatActivity {
                 recommendAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-    private void InitailizeData6() {
-        dataList6 = new ArrayList<>();
-        Thread t = new Thread(new Runnable() {
+        Button evallow = (Button) findViewById(R.id.evaluationlow_Btn);
+        evallow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                //API호출
-                Recipe recipe = new Recipe();
-                //해당 사용자의 식자재 목록 반환
-                RecipeModel result = recipe.getRecipeDetail(1);
-                Bitmap img = recipe.getImg(result.img);
-                runOnUiThread(new Runnable() {
+            public void onClick(View view) {
+                Comparator<recommend> sort = new Comparator<recommend>() {
                     @Override
-                    public void run() {
-//                        StringBuilder txt = new StringBuilder(result.description);
-//                        txt.append("\n");
-//                        for(int i=0;i<result.procedure.size();i++)
-//                            txt.append(Integer.toString(i)).append(". ").append("\n").append(result.procedure.get(i));
-////                            test.setText(txt.toString());
-////                            testImg.setImageBitmap(img);
-//
-//                            dataList6.add(new recommend())
-                        dataList6.add(new recommend(R.drawable.ic_launcher_background,result.name,(float) result.difficulty));
-                    }
-                });
+                    public int compare(recommend recommend1, recommend recommend2) {
+                        int ret = 0;
 
+                        if(recommend1.getEvaluate()<recommend2.getEvaluate()){
+                            ret = -1;
+                        }
+                        else if(recommend1.getEvaluate()==recommend2.getEvaluate()){
+                            ret = 0;
+                        }
+                        else{
+                            ret = 1;
+                        }
+                        return ret;
+                    }
+                };
+
+                Collections.sort(dataList6,sort);
+                recommendAdapter.notifyDataSetChanged();
             }
         });
-        dataList6.add(new recommend(R.drawable.ic_launcher_background,"사과", (float) 1.6));
-        dataList6.add(new recommend(R.drawable.ic_launcher_background,"바나나",(float) 4.4));
-        dataList6.add(new recommend(R.drawable.ic_launcher_background,"당근",(float) 3));
-    }
+        Button evalhigh = (Button) findViewById(R.id.evaluationhigh_Btn);
+        evalhigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comparator<recommend> sort = new Comparator<recommend>() {
+                    @Override
+                    public int compare(recommend recommend1, recommend recommend2) {
+                        int ret = 0;
 
+                        if(recommend1.getEvaluate()<recommend2.getEvaluate()){
+                            ret = 1;
+                        }
+                        else if(recommend1.getEvaluate()==recommend2.getEvaluate()){
+                            ret = 0;
+                        }
+                        else{
+                            ret = -1;
+                        }
+                        return ret;
+                    }
+                };
+
+                Collections.sort(dataList6,sort);
+                recommendAdapter.notifyDataSetChanged();
+            }
+        });
+        Button timelow = (Button) findViewById(R.id.timelow_Btn);
+        timelow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comparator<recommend> sort = new Comparator<recommend>() {
+                    @Override
+                    public int compare(recommend recommend1, recommend recommend2) {
+                        int ret = 0;
+
+                        if(recommend1.getTime()<recommend2.getTime()){
+                            ret = -1;
+                        }
+                        else if(recommend1.getTime()==recommend2.getTime()){
+                            ret = 0;
+                        }
+                        else{
+                            ret = 1;
+                        }
+                        return ret;
+                    }
+                };
+
+                Collections.sort(dataList6,sort);
+                recommendAdapter.notifyDataSetChanged();
+            }
+        });
+        Button timehigh = (Button) findViewById(R.id.timehigh_Btn);
+        timehigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comparator<recommend> sort = new Comparator<recommend>() {
+                    @Override
+                    public int compare(recommend recommend1, recommend recommend2) {
+                        int ret = 0;
+
+                        if(recommend1.getTime()<recommend2.getTime()){
+                            ret = 1;
+                        }
+                        else if(recommend1.getTime()==recommend2.getTime()){
+                            ret = 0;
+                        }
+                        else{
+                            ret = -1;
+                        }
+                        return ret;
+                    }
+                };
+
+                Collections.sort(dataList6,sort);
+                recommendAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 }

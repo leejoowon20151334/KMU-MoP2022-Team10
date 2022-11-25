@@ -36,7 +36,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             food = itemView.findViewById(R.id.foodname);
             due = itemView.findViewById(R.id.duedate);
             relativeLayout = itemView.findViewById(R.id.layoutrelative);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -44,25 +43,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     food fooddata;
                     fooddata = myDataList.get(pos);
                     Intent intent = new Intent(context, Popup_3_1.class);
-                    intent.putExtra("data",Integer.toString(fooddata.getDueDate()));
+                    intent.putExtra("data",fooddata.getFoodName());
+                    intent.putExtra("image",fooddata.getImageResource());
+                    intent.putExtra("count",fooddata.getCount());
                     context.startActivity(intent);
-
-//                    Dialog dialog3_1;
-//                    dialog3_1 = new Dialog(context);
-//                    dialog3_1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                    dialog3_1.setContentView(R.layout.dialog_3_1);
-//                    TextView dialogdue = (TextView) dialog3_1.findViewById(R.id.dialog_due);
-//
-//                    dialogdue.setText(fooddata.getDueDate());
-//
-//                    dialog3_1.show();
-//                    AlertDialog.Builder menu = new AlertDialog.Builder(context);
-//                    menu.setIcon(R.mipmap.ic_launcher);
-//                    menu.setTitle("DialogTest");
-//                    menu.setMessage("안녕");
-//                    menu.show();
-//
-//                    Toast.makeText(context,fooddata.getFoodName(),Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -85,15 +69,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageView.setImageResource(myDataList.get(position).getImageResourceID());
+        holder.imageView.setImageBitmap(myDataList.get(position).getImageResource());
         holder.food.setText(myDataList.get(position).getFoodName());
-        holder.due.setText(Integer.toString(myDataList.get(position).getDueDate())+"일");
+        if(myDataList.get(position).getDueDate()<4){
+            holder.due.setText(Integer.toString(myDataList.get(position).getDueDate())+"일 유통기한이 얼마 남지 않았어요!!");
+            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FA8072"));
+        }
+        else{
+            holder.due.setText(Integer.toString(myDataList.get(position).getDueDate())+"일");
+            holder.relativeLayout.setBackgroundColor(Color.parseColor("#90EE90"));
+        }
         // 아래는 남은 일자에 따라서 배경 색깔을 바꾸어주는 코드 입니다.
-        int color;
-        color = myDataList.get(position).getDueDate();
-        if(color<4){holder.relativeLayout.setBackgroundColor(Color.parseColor("#FA8072"));}
-        else if(color>3 && color<8){holder.relativeLayout.setBackgroundColor(Color.parseColor("#AFEEEE"));}
-        else{holder.relativeLayout.setBackgroundColor(Color.parseColor("#90EE90"));}
+//        int color;
+//        color = myDataList.get(position).getDueDate();
+//        if(color<4){holder.relativeLayout.setBackgroundColor(Color.parseColor("#FA8072"));}
+//        else if(color>3 && color<8){holder.relativeLayout.setBackgroundColor(Color.parseColor("#AFEEEE"));}
+//        else{holder.relativeLayout.setBackgroundColor(Color.parseColor("#90EE90"));}
     }    //position에 해당하는 데이터를 ViewHolder가 관리하는 View에 바인딩(Binding)
     @Override
     public int getItemCount() {

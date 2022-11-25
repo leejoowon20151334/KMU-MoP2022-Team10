@@ -65,7 +65,41 @@ public class Recipe {
         return recipe;
     }
 
+    public boolean useRecipe(int userId,int recipeId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("recipeId",Integer.toString(recipeId));
+        JSONObject result = rest.GET("/useRecipe",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/Recipe/useRecipe",e.toString());
+        }
+        return false;
+    }
+
     public ArrayList<RecipeModel> getFavorite(int userId) {
+        ArrayList<RecipeModel> list = new ArrayList<>();
+        RecipeModel recipe = new RecipeModel();
+
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        JSONObject result = rest.GET("/getFavorite",val);
+        try {
+            Log.d("APItest",result.toString());
+            JSONArray data = result.getJSONArray("data");
+            list = jsonToList(data);
+        }catch (Exception e){
+            Log.d("Rest/Recipe/getFavorite",e.toString());
+        }
+
+        return list;
+    }
+
+    public ArrayList<RecipeModel> getMyEvaluation(int userId) {
         ArrayList<RecipeModel> list = new ArrayList<>();
         RecipeModel recipe = new RecipeModel();
 
@@ -120,6 +154,8 @@ public class Recipe {
                     model.time = recipe.getInt("time");
                 if(recipe.has("difficulty"))
                     model.difficulty=recipe.getInt("difficulty");
+                if(recipe.has("evaluation"))
+                    model.evaluation=recipe.getDouble("evaluation");
                 if(recipe.has("description"))
                     model.description=recipe.getString("description");
                 if(recipe.has("img"))

@@ -1,16 +1,20 @@
 package com.mop2022.team10;
 
+import android.graphics.Bitmap;
+
 public class food {
-    private int imageResourceID;
+    private Bitmap imageResource;
     private String foodName;
     private int dueDate;
-    public food(int id, String food, int due){
-        this.imageResourceID = id;
+    private double count;
+    public food(Bitmap id, String food, int due,double count){
+        this.imageResource = id;
         this.foodName = food;
         this.dueDate = due;
+        this.count = count;
     }
-    public int getImageResourceID(){
-        return imageResourceID;
+    public Bitmap getImageResource(){
+        return imageResource;
     }
     public String getFoodName(){
         return foodName;
@@ -18,9 +22,10 @@ public class food {
     public int getDueDate(){
         return dueDate;
     }
+    public double getCount(){return count;}
 
-    public void setImageResourceID(int imageResourceID) {
-        this.imageResourceID = imageResourceID;
+    public void setImageResource(Bitmap imageResource) {
+        this.imageResource = imageResource;
     }
 
     public void setFoodName(String foodName) {
@@ -30,4 +35,5 @@ public class food {
     public void setDueDate(int dueDate) {
         this.dueDate = dueDate;
     }
+    public void setCount(int count){this.count = count;}
 }

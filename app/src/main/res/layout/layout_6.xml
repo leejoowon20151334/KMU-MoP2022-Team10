@@ -31,19 +31,47 @@
         android:layout_toLeftOf="@id/difficultyhigh_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="난이도 낮은 순"/>
+        android:text="난이도 낮은순"/>
     <Button
         android:id="@+id/difficultyhigh_Btn"
         android:layout_below="@id/textrecommend"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="난이도 높은 순"/>
+        android:text="난이도 높은순"/>
+    <Button
+        android:id="@+id/evaluationlow_Btn"
+        android:layout_below="@id/difficultylow_Btn"
+        android:layout_toLeftOf="@id/evaluationhigh_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="평점 낮은 순"/>
+    <Button
+        android:id="@+id/evaluationhigh_Btn"
+        android:layout_below="@id/difficultyhigh_Btn"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="평점 높은 순"/>
+    <Button
+        android:id="@+id/timelow_Btn"
+        android:layout_below="@id/evaluationlow_Btn"
+        android:layout_toLeftOf="@id/timehigh_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시간 짧은 순"/>
+    <Button
+        android:id="@+id/timehigh_Btn"
+        android:layout_below="@id/evaluationhigh_Btn"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시간 길은 순"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView1"
-        android:layout_below="@id/difficultyhigh_Btn"
+        android:layout_below="@id/timehigh_Btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
