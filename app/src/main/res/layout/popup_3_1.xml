@@ -5,6 +5,7 @@
     android:layout_gravity="center"
     android:orientation="vertical">
     <ImageView
+        android:id="@+id/imageView_popup"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_gravity="center"
