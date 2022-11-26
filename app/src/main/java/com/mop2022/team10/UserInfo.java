@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -37,19 +38,73 @@ public class UserInfo extends AppCompatActivity {
     private LinearLayout Lay;
     private LinearLayout Lay1;
     private LinearLayout Lay2;
+    String name;
     int userId;
 
     public void userInfoOnClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog;
         switch(v.getId()) {
             case R.id.user_info_ChangeName:
+
+                builder.setTitle("이름변경").setMessage("");
+                final EditText input = new EditText(this);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+//                        input.getText();
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                User user = new User();
+                                userId = user.getUserId(name);
+                                user.changeName(userId, String.valueOf(input.getText()));
+                            }
+                        });
+                        t.start();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alertDialog = builder.create();
+                alertDialog.show();
                 break;
             case R.id.user_info_Fush:
                 // 푸쉬 알림 관련 설정
+
+                builder.setTitle("푸쉬 알림").setMessage("활성화 하시겠습니까?");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alertDialog = builder.create();
+                alertDialog.show();
                 break;
             case R.id.user_info_Withdrawal:
                 //회원탈퇴 버튼
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
                 builder.setTitle("회원 탈퇴").setMessage("정말 탈퇴 하시겠습니까?.");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -68,7 +123,7 @@ public class UserInfo extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog alertDialog = builder.create();
+                alertDialog = builder.create();
                 alertDialog.show();
                 break;
         }
@@ -80,7 +135,7 @@ public class UserInfo extends AppCompatActivity {
         setContentView(R.layout.user_info);
         TextView Title = findViewById(R.id.user_info_UserName);
         SharedPreferences pref = getSharedPreferences("userId", 0);
-        String name = pref.getString("userName", "test");
+        name = pref.getString("userName", "");
         Title.setText(name);
         Lay = findViewById(R.id.user_info_FirScrollView);
         Lay1 = findViewById(R.id.user_info_SecScrollView);

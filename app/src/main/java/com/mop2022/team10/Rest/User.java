@@ -107,6 +107,22 @@ public class User {
         return false;
     }
 
+    public boolean changeName(int userId, String name){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("name",name);
+        JSONObject result = rest.POST("/setUsername",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/setUsername",e.toString());
+        }
+        return false;
+    }
+
     //사용자 검색 기록 등록 : 성공시 true
     public boolean addUserSearchLog(int userId,int recipeId){
         HashMap<String,String> val = new HashMap<>();
