@@ -112,6 +112,46 @@ public class RestUtil {
         return null;
     }
 
+    public JSONObject POST(String src, HashMap<String,String> param) {
+        StringBuilder urlStr = new StringBuilder(host + src + "?");
+        for(String k : param.keySet()){
+            urlStr.append(k).append("=").append(param.get(k)).append("&");
+        }
+        String response = "";
+        try {
+//            URL url = new URL(host+src);urlStr
+            URL url = new URL(urlStr.toString());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type","application/json; charset=utf-8");
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+//            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            //bw.write("testtest");
+//            bw.write(img);
+//            bw.flush();
+//            bw.close();
+
+            Charset charset = StandardCharsets.UTF_8;
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
+            String inputLine;
+            StringBuffer sb = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            br.close();
+
+            response = sb.toString();
+            conn.disconnect();
+            return parse(response);
+        }catch (Exception e){
+            Log.d("Rest error : ",e.toString());
+        }
+        return null;
+    }
     private JSONObject parse(String apiResult) throws JSONException {
         return new JSONObject(apiResult);
     }
