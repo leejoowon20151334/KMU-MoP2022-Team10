@@ -5,73 +5,108 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="BACK"
-        android:minHeight="48dp"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
-    <TextView
-        android:id="@+id/textrecommend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="30dp"
-        android:layout_alignParentTop="true"
-        android:text="레시피 추천">
-    </TextView>
-    <Button
-        android:id="@+id/difficultylow_Btn"
-        android:layout_below="@id/textrecommend"
-        android:layout_toLeftOf="@id/difficultyhigh_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="난이도 낮은순"/>
-    <Button
-        android:id="@+id/difficultyhigh_Btn"
-        android:layout_below="@id/textrecommend"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="난이도 높은순"/>
-    <Button
-        android:id="@+id/evaluationlow_Btn"
-        android:layout_below="@id/difficultylow_Btn"
-        android:layout_toLeftOf="@id/evaluationhigh_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="평점 낮은 순"/>
-    <Button
-        android:id="@+id/evaluationhigh_Btn"
-        android:layout_below="@id/difficultyhigh_Btn"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="평점 높은 순"/>
-    <Button
-        android:id="@+id/timelow_Btn"
-        android:layout_below="@id/evaluationlow_Btn"
-        android:layout_toLeftOf="@id/timehigh_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시간 짧은 순"/>
-    <Button
-        android:id="@+id/timehigh_Btn"
-        android:layout_below="@id/evaluationhigh_Btn"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시간 길은 순"/>
 
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:background="#84BA71"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="BACK"
+            android:minHeight="48dp"
+            app:srcCompat="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textrecommend"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="75dp"
+            android:background="#84BA71"
+            android:text="레시피 추천"
+            android:textColor="#455A64"
+            android:textSize="30sp"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_below="@id/linear2"
+        android:gravity="right"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/difficultylow_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="난이도↓" />
+
+        <Button
+            android:id="@+id/evaluationlow_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평점↓" />
+
+        <Button
+            android:id="@+id/timelow_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간↓" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:gravity="right"
+        android:layout_below="@id/linear"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/difficultyhigh_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="난이도↑" />
+
+        <Button
+            android:id="@+id/evaluationhigh_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평점↑" />
+
+        <Button
+            android:id="@+id/timehigh_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간↑" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/linear1"
+        android:background="#AAAAAA"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView1"
-        android:layout_below="@id/timehigh_Btn"
+        android:layout_below="@id/line"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"

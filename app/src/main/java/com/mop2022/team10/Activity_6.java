@@ -55,7 +55,7 @@ public class Activity_6 extends AppCompatActivity {
                     RecipeModel result = recipe.getRecipeDetail(i);
                     Bitmap img = recipe.getImg(result.img);
                     final int ind = i;
-                    dataList6.add(new recommend(img, result.name, (float) result.difficulty, result.time, result.difficulty));
+                    dataList6.add(new recommend(img, result.name, (float) result.difficulty, result.time, result.evaluation,result.id));
                 }
                 runOnUiThread(new Runnable() {
                     @Override
