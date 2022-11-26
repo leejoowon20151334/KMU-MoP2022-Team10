@@ -36,11 +36,19 @@ import java.util.Comparator;
 
 public class Activity_3_1 extends AppCompatActivity {
     private ArrayList<food> dataList;
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_3_1);
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton1);
+//------------------유저 아이디 인텐트로 받아오기----------------------------------------
+
+        if(getIntent().hasExtra("userId"))
+            userId = (int) getIntent().getExtras().get("userId");
+        else
+            userId = 1;
+//--------------------------------------------------------------
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +103,7 @@ public class Activity_3_1 extends AppCompatActivity {
                 myAdapter.notifyDataSetChanged();
             }
         });
-
+//-------------------------------카메라 끝-------------------------------------------------------
 //        Context context = this;
 //        dataList = new ArrayList<>();
 //        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -110,7 +118,7 @@ public class Activity_3_1 extends AppCompatActivity {
                 //API호출
                 Ingredient ingredient = new Ingredient();
                 //---------------유저 호출
-                ArrayList<IngredientModel> ingredientList = ingredient.userIngredient(1);
+                ArrayList<IngredientModel> ingredientList = ingredient.userIngredient(userId);
                 //---------------------------
                 for(int i=0;i<ingredientList.size();i++){
                     IngredientModel data = ingredientList.get(i);
@@ -119,7 +127,7 @@ public class Activity_3_1 extends AppCompatActivity {
                     LocalDate expirationdate = data.expirationDate;
                     Period period = Period.between(currentdate,expirationdate);
                     int duedateint = period.getDays();
-                    dataList.add(new food(img2,data.name, duedateint,data.count));
+                    dataList.add(new food(img2,data.name, duedateint,data.count,data.unit,expirationdate));
                 }
                 //해당 사용자의 식자재 목록 반환
                 runOnUiThread(new Runnable() {

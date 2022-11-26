@@ -11,6 +11,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         app:cardCornerRadius="10dp"
+        android:background="@color/cardview_shadow_end_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,19 +19,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/line222"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:paddingTop="5dp"
+                android:background="#AAAAAA"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <TextView
                 android:id="@+id/recomendfoodname"
                 android:layout_width="wrap_content"
+                android:layout_below="@id/line222"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignParentTop="true"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:text="TextView" />
+            <TextView
+                android:id="@+id/line111"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/recomendfoodname"
+                android:background="#AAAAAA"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
             <ImageView
                 android:id="@+id/recomendimageView"
                 android:layout_width="match_parent"
-                android:layout_below="@id/recomendfoodname"
+                android:layout_below="@id/line111"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 app:srcCompat="@mipmap/ic_launcher" />
@@ -38,6 +61,8 @@
                 android:id="@+id/recipeDetail_evaluationImg6"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_below="@id/recomendimageView"
                 android:layout_alignParentStart="true"
                 android:src="@drawable/ic_thumb_up"/>
@@ -46,6 +71,7 @@
                 android:id="@+id/recipeDetail_evaluation6"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_below="@id/recomendimageView"
                 android:layout_toEndOf="@id/recipeDetail_evaluationImg6"
                 android:layout_marginLeft="10dp"
@@ -58,16 +84,27 @@
                 android:layout_height="40dp"
                 android:text="쉬워요"
                 android:textSize="30sp"
+                android:layout_toLeftOf="@id/line333"
                 android:layout_below="@id/recomendimageView"
-                android:layout_alignParentEnd="true"/>
-
+                />
+            <TextView
+                android:id="@+id/line333"
+                android:layout_below="@id/recomendimageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:layout_toLeftOf="@id/time"
+                android:textSize="25sp"/>
             <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
+                android:paddingRight="5dp"
+
                 android:layout_height="40dp"
+                android:paddingLeft="10dp"
                 android:text="3분"
-                android:textSize="20sp"
-                android:layout_below="@id/score"
+                android:textSize="25sp"
+                android:layout_below="@id/recomendimageView"
                 android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>

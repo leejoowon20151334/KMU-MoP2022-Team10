@@ -7,13 +7,15 @@ public class recommend {
     private String foodName;
     private float rate;
     private int time;
-    private float evaluate;
-    public recommend(Bitmap id, String food,float rate,int time,float evaluate){
+    private double evaluate;
+    private int recipeId;
+    public recommend(Bitmap id, String food,float rate,int time,double evaluate,int recipeId){
         this.imageResource = id;
         this.foodName = food;
         this.rate = rate;
         this.time = time;
         this.evaluate = evaluate;
+        this.recipeId = recipeId;
     }
     public Bitmap getImageResource(){
         return imageResource;
@@ -23,7 +25,8 @@ public class recommend {
     }
     public Float getRate(){return rate;}
     public int getTime(){return time;}
-    public Float getEvaluate(){return evaluate;}
+    public Double getEvaluate(){return evaluate;}
+    public int getRecipeId(){return recipeId;}
     public void setImageResource(Bitmap imageResource) {
         this.imageResource = imageResource;
     }
@@ -33,4 +36,5 @@ public class recommend {
     }
     public void setTime(){this.time = time;}
     public void setEvaluate(float evaluate) {this.evaluate = evaluate;}
+    public void setRecipeId(int recipeId){this.recipeId = recipeId;}
 }
