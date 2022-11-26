@@ -31,8 +31,6 @@
         <activity android:name=".Activity_2"/>
         <activity android:name=".Activity_3"/>
         <activity android:name=".Activity_3_1"/>
-        <activity android:name=".Activity_4"/>
-        <activity android:name=".Activity_4_1"/>
         <activity android:name=".UserInfo"/>
         <activity android:name=".Activity_6"/>
         <activity android:name=".Popup_3_1"
@@ -43,6 +41,22 @@
         <activity
             android:name=".RecipeDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity_4"
+            android:label="page 4"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity_4_1"
+            android:label="page 4_1"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
 
 
         <provider
