@@ -61,7 +61,7 @@ public class UserInfo extends AppCompatActivity {
                             public void run() {
                                 User user = new User();
                                 userId = user.getUserId(name);
-                                user.changeName(userId, String.valueOf(input.getText()));
+//                                user.changeName(userId, String.valueOf(input.getText()));
                             }
                         });
                         t.start();
