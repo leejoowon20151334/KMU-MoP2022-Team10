@@ -135,7 +135,7 @@ public class User {
             if(data.equals("success"))
                 return true;
         }catch (Exception e){
-            Log.d("Rest/User/addFavorite",e.toString());
+            Log.d("Rest/User/addUserSearchLog",e.toString());
         }
         return false;
     }

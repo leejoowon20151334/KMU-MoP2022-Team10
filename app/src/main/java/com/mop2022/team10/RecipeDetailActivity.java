@@ -29,7 +29,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
@@ -60,6 +62,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ImageView favorite;
     private LinearLayout ingredients;
     private LinearLayout procedures;
+    private RelativeLayout modal;
+    private ArrayList<ImageView> evaluationStars = new ArrayList<>();
+    private Button execute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         favorite = findViewById(R.id.recipeDetail_favoriteImg);
         ingredients = findViewById(R.id.recipeDetail_ingredients);
         procedures = findViewById(R.id.recipeDetail_procedures);
+        modal = findViewById(R.id.recipeDetail_evaluationModal);
+        evaluationStars.add(findViewById(R.id.recipeDetail_evaluationStar_1));
+        evaluationStars.add(findViewById(R.id.recipeDetail_evaluationStar_2));
+        evaluationStars.add(findViewById(R.id.recipeDetail_evaluationStar_3));
+        evaluationStars.add(findViewById(R.id.recipeDetail_evaluationStar_4));
+        evaluationStars.add(findViewById(R.id.recipeDetail_evaluationStar_5));
+        execute = findViewById(R.id.recipeDetail_execute);
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -188,8 +200,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             procedures.addView(margin);
                             i++;
                         }
-
-
+                        setPastEvaluation();
+                        setUserLog();
                     }
                 });
             }
@@ -204,6 +216,36 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 }else{
                     favoriteOn();
                 }
+            }
+        });
+
+        findViewById(R.id.recipeDetail_evaluationBtn).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                modal.setVisibility(View.VISIBLE);
+            }
+        });
+        findViewById(R.id.recipeDetail_evaluationModal_btn).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                modal.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        for(int i=0;i<5;i++){
+            int point = i+1;
+            evaluationStars.get(i).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    evaluate(point);
+                }
+            });
+        }
+
+        execute.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                useRecipe();
             }
         });
     }
@@ -236,79 +278,100 @@ public class RecipeDetailActivity extends AppCompatActivity {
         t.start();
     }
 
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        //기타 로직
-
-
-
-        String[] permissions = {
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
-
-        //카메라 호출 버튼
-        cameraBtn = (Button) findViewById(R.id.recipeDetail_testCamera);
-
-        //촬영한 사진 관련 permission check
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, permissions, 1);
-
-        //카메라 호출 버튼 클릭시 작동
-        cameraBtn.setOnClickListener(new View.OnClickListener(){
+    private void setPastEvaluation(){
+        Thread t = new Thread(new Runnable() {
             @Override
-            public void onClick(View view) {
-                sendTakePhotoIntent();
+            public void run() {
+                Recipe recipe = new Recipe();
+                int val = recipe.getUserEvaluation(userId,recipeId);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setStar(val);
+                    }
+                });
             }
         });
+        t.start();
     }
 
-    //기본 카메라앱 실행
-    private void sendTakePhotoIntent() {
-        try {
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(takePictureIntent, 101);
-        }catch (Exception e){
-            Log.d("imageRecognition",e.toString());
-        }
-    }
-
-    //기본 카메라앱에서 촬영한 사진 받아온 후 동작
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 101 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    RestUtil rs = new RestUtil();
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
-                    byte[] bytes = baos.toByteArray();
-                    String imgStr = Base64.encodeToString(bytes, Base64.DEFAULT);
-                    JSONObject result = rs.PostImg("/imageRecognition",imgStr);
-                    if(result != null) {
-                        try {
-                            String data = result.getString("data");
-                            if(data.equals("success"))
-                                Log.d("APItest", "success");
-                        }catch (Exception e){
-                            Log.d("APItest","fail");
+    private void evaluate(int point){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Recipe recipe = new Recipe();
+                if(recipe.evaluate(userId,recipeId,point)){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setStar(point);
+                            setEvaluation();
                         }
-                    }else
-                        Log.d("APItest","fail");
+                    });
                 }
-            });
-            t.start();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
+            }
+        });
+        t.start();
+    }
 
+    private void setStar(int count){
+        for(int i=0;i<5;i++){
+            if(i<count)
+                evaluationStars.get(i).setImageResource(R.drawable.ic_star_fill);
+            else
+                evaluationStars.get(i).setImageResource(R.drawable.ic_star_empty);
+        }
+    }
+
+    private void setEvaluation(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Recipe recipe = new Recipe();
+                double point = recipe.getEvaluation(recipeId);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if(point>0)
+                            evaluation.setText(Double.toString(point));
+                        else if(point==0)
+                            evaluation.setText("-");
+                    }
+                });
+            }
+        });
+        t.start();
+    }
+
+    private void useRecipe(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Recipe recipe = new Recipe();
+                recipe.useRecipe(userId,recipeId);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast myToast = Toast.makeText(getApplicationContext(),"조리완료! 식자재에서 자동차감 되었습니다.", Toast.LENGTH_SHORT);
+                        myToast.show();
+                        finish();
+                    }
+                });
+            }
+        });
+        t.start();
+    }
+
+    private void setUserLog(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user = new User();
+                user.addUserSearchLog(userId,recipeId);
+            }
+        });
+        t.start();
+    }
 }
 

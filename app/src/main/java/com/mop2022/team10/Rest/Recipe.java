@@ -117,6 +117,51 @@ public class Recipe {
         return list;
     }
 
+    public int getUserEvaluation(int userId,int recipeId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("recipeId",Integer.toString(recipeId));
+        JSONObject result = rest.GET("/getUserEvaluation",val);
+        Log.d("APItest",result.toString());
+        try {
+            long data = result.getLong("data");
+            return (int) data;
+        }catch (Exception e){
+            Log.d("Rest/Recipe/getUserEvaluation",e.toString());
+        }
+        return 0;
+    }
+
+    public double getEvaluation(int recipeId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("recipeId",Integer.toString(recipeId));
+        JSONObject result = rest.GET("/getEvaluation",val);
+        Log.d("APItest",result.toString());
+        try {
+            return (double)((int)(result.getDouble("data") * 10)) / 10;
+        }catch (Exception e){
+            Log.d("Rest/Recipe/getEvaluation",e.toString());
+        }
+        return 0;
+    }
+
+    public boolean evaluate(int userId,int recipeId,int evaluation){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        val.put("recipeId",Integer.toString(recipeId));
+        val.put("evaluation",Integer.toString(evaluation));
+        JSONObject result = rest.GET("/addUserEvaluation",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/Recipe/addUserEvaluation",e.toString());
+        }
+        return false;
+    }
+
     //사용자 레시피 검색내역
     public ArrayList<RecipeModel> userSearchLog(int userId){
 
