@@ -46,12 +46,12 @@ public class Activity_4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int recipe_id = (int) v.getTag();
-                // 레시피 내용으로 이동해주세요. 연결해야 할 부분
-//                Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
-//                intent.putExtra("recipeId", recipe_id);
-//                intent.putExtra("userId", userId);
-//
-//                startActivity(intent);
+
+                Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
+                intent.putExtra("recipeId", recipe_id);
+                intent.putExtra("userId", userId);
+
+                startActivity(intent);
             }
         };
 

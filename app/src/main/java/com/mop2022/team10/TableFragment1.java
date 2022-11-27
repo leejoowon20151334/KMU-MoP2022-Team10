@@ -1,14 +1,19 @@
 package com.mop2022.team10;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -33,6 +38,7 @@ public class TableFragment1 extends Fragment {
     private View view;
     private Button btn_frag2;
 
+    ArrayList<Bitmap> img_list = new ArrayList<>();
     ArrayList<IngredientModel> ingredient_test = new ArrayList<>();
     @Nullable
     @Override
@@ -45,34 +51,7 @@ public class TableFragment1 extends Fragment {
         }
 
         TableLayout TL = (TableLayout) view.findViewById(R.id.tl);
-
-
         Ingredient ingredient = new Ingredient();
-
-        View.OnClickListener myListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String projectId = v.getTag().toString();
-                ImageView b = (ImageView) v;
-
-                Toast.makeText(getActivity().getApplicationContext(),projectId,Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater1 = getActivity().getLayoutInflater();
-                dlg.setView(inflater1.inflate(R.layout.dialog,null));
-                dlg.setTitle(projectId + " 추가");
-
-                dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
-                    }
-                });
-                dlg.setNegativeButton("취소",null);
-
-                dlg.show();
-            }
-        };
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -91,23 +70,19 @@ public class TableFragment1 extends Fragment {
 
                         String str_name = ingredient_test.get(j).name;
                         Bitmap img = ingredient.getImg(ingredient_test.get(j).img);
+                        img_list.add(img);
 
                         final int ind = j;
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                // 이미지뷰(사진)과 텍스트(이름)을 묶기 위해 레이아웃을 적용하면 화면에 나타나지 않음
-//                                LinearLayout ll = new LinearLayout(getActivity());
-//                                ll.setLayoutParams(new ViewGroup.LayoutParams(
-//                                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//                                ll.setOrientation(LinearLayout.VERTICAL);
 
                                 ImageView testImg = new ImageView(getActivity());
-                                // 이미지뷰에 사진 크기 조절을 위한 작업을 적용하면 사진이 화면에 나타나지 않음
-//                                testImg.setLayoutParams(new LinearLayout.LayoutParams(300, 300));
-//                                testImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                testImg.setTag(str_name);
+                                testImg.setLayoutParams(new TableRow.LayoutParams(200,200));
+                                testImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                testImg.setTag(R.id.name_string, str_name);
+                                testImg.setTag(R.id.image_bitmap,img);
+                                testImg.setTag(R.id.number, ind);
                                 testImg.setOnClickListener(myListener);
                                 testImg.setImageBitmap(img);
                                 TextView name = new TextView(getActivity());
@@ -154,4 +129,54 @@ public class TableFragment1 extends Fragment {
         });
         return view;
     }
+    View.OnClickListener myListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String projectId = v.getTag(R.id.name_string).toString();
+            int index = (int) v.getTag(R.id.number);
+
+            Toast.makeText(getActivity().getApplicationContext(),projectId,Toast.LENGTH_SHORT).show();
+
+            AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater1 = getActivity().getLayoutInflater();
+            View layout_dlg = inflater1.inflate(R.layout.dialog,null);
+            ImageView Img2 = (ImageView) layout_dlg.findViewById(R.id.imageView22);
+            Img2.setLayoutParams(new LinearLayout.LayoutParams(400,400));
+            Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            Img2.setImageBitmap(img_list.get(index));
+            dlg.setView(layout_dlg);
+            dlg.setTitle(projectId + " 추가");
+
+            dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    LayoutInflater inflater1 = getActivity().getLayoutInflater();
+                    View layout_dlg = inflater1.inflate(R.layout.dialog,null);
+                    EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
+                    EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
+                    String a = "";
+                    if (et1.getText() != null)
+                        a = et1.getText().toString();
+                    String b = "";
+                    if (et2.getText() != null)
+                        b = et2.getText().toString();
+
+                    // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
+                    if (a.length() > 0 && b.length() > 0) {
+                        Intent intent = new Intent(getActivity().getApplicationContext(), Activity_3_1.class);
+                        intent.putExtra("유통기한정보", a);
+                        intent.putExtra("수량정보", b);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                    else {
+                        Toast.makeText(getActivity().getApplicationContext(),"유통기한 정보와 수량정보를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            dlg.setNegativeButton("취소",null);
+
+            dlg.show();
+        }
+    };
 }

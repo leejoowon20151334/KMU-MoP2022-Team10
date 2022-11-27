@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView22"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:id="@+id/ll_dlg"></LinearLayout>
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_dlg"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:orientation="vertical">-->
+
+<!--    </LinearLayout>-->
 
     <TextView
         android:id="@+id/textView"
@@ -28,6 +37,7 @@
         android:ems="10"
         android:inputType="date"
         tools:ignore="SpeakableTextPresentCheck"
+        android:hint="ex) 2022-11-25"
          />
 
     <TextView
@@ -46,6 +56,7 @@
         android:autofillHints="1"
         android:ems="10"
         android:inputType="numberSigned"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:hint="ex) 1"/>
 
 </LinearLayout>

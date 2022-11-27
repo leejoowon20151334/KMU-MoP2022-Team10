@@ -3,10 +3,13 @@ package com.mop2022.team10;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.location.GnssAntennaInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 
 public class Activity_4_1 extends AppCompatActivity {
     int userId;
+    ArrayList<RecipeModel> result = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,26 +44,29 @@ public class Activity_4_1 extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                Recipe recipe = new Recipe();
-                ArrayList<RecipeModel> result = recipe.searchRecipe(query);
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Recipe recipe = new Recipe();
+                        result = recipe.searchRecipe(query);
 
-                String recipe_name = "";
-                int recipe_id=0;
-                for(int i=1;i<=52;i++)
-                {
-                    if(result.get(i).name == query)
-                    {
-                        recipe_name = result.get(i).name;
-                        recipe_id = result.get(i).id;
-                        break;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i = 0;i < result.size();i++)
+                                {
+                                    LinearLayout ll4_1 = findViewById(R.id.ll_4_1);
+                                    Button btn = new Button(Activity_4_1.this);
+                                    btn.setText(result.get(i).name);
+                                    btn.setTag(i);
+                                    btn.setOnClickListener(myListener);
+                                    ll4_1.addView(btn);
+                                }
+                            }
+                        });
                     }
-                }
-                // 레시피 내용으로 이동해주세요. 연결해야할 부분
-//                Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
-//                intent.putExtra("recipeId", recipe_id);
-//                intent.putExtra("userId", userId);
-//
-//                startActivity(intent);
+                });
+                t.start();
 
                 return true;
             }
@@ -70,8 +77,19 @@ public class Activity_4_1 extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
     }
+    View.OnClickListener myListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int ind = (int) view.getTag();
+            String recipe_name = result.get(ind).name;
+            int recipe_id = result.get(ind).id;
+
+            Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
+            intent.putExtra("recipeId", recipe_id);
+            intent.putExtra("userId", userId);
+
+            startActivity(intent);
+        }
+    };
 }

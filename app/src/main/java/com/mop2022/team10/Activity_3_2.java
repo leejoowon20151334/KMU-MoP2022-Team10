@@ -79,7 +79,6 @@ public class Activity_3_2 extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(),"sss",Toast.LENGTH_SHORT).show();
                 int i;
                 for (i=0;i<ingredientList2.size();i++) {
 
@@ -91,30 +90,16 @@ public class Activity_3_2 extends AppCompatActivity {
                     }
                 }
                 final int ind = i;
-                ImageView testImg = new ImageView(Activity_3_2.this);
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Ingredient ingredient = new Ingredient();
-                        Bitmap img = ingredient.getImg(ingredientList2.get(ind).img);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                testImg.setImageBitmap(img);
-                            }
-                        });
-                    }
-                });
-                t.start();
-
-                // 다이얼로그에 사진이 전달되지 않음.
-                LinearLayout ll_dlg = findViewById(R.id.ll_dlg);
-                ll_dlg.addView(testImg);
+                Ingredient ingredient = new Ingredient();
 
                 AlertDialog.Builder dlg = new AlertDialog.Builder(Activity_3_2.this);
                 LayoutInflater inflater1 = getLayoutInflater();
-                dlg.setView(inflater1.inflate(R.layout.dialog,null));
+                View layout_dlg = inflater1.inflate(R.layout.dialog,null);
+                ImageView Img2 = (ImageView) layout_dlg.findViewById(R.id.imageView22);
+                Img2.setLayoutParams(new LinearLayout.LayoutParams(400,400));
+                Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                Img2.setImageBitmap(ingredient.getImg(ingredientList2.get(ind).img));
+                dlg.setView(layout_dlg);
                 dlg.setTitle(filterIngredient + " 추가");
 
 
@@ -125,20 +110,28 @@ public class Activity_3_2 extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         EditText et1 = findViewById(R.id.editTextDate);
-                        String a = et1.getText().toString();
-
                         EditText et2 = findViewById(R.id.editTextNumberSigned);
-                        String b = et2.getText().toString();
+                        String a = "";
+                        if(et1.getText() != null)
+                            a = et1.getText().toString();
+                        String b = "";
+                        if(et2.getText() != null)
+                            b = et2.getText().toString();
 
-                        // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달 (레시피 내용으로 이동)
-//                        Intent intent = new Intent(getApplicationContext(), );
-//                        intent.putExtra("유통기한정보", a);
-//                        intent.putExtra("수량정보", b);
-//                        startActivity(intent);
+                        // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
+                        if(a.length() > 0 && b.length() > 0) {
+                            Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+                            intent.putExtra("유통기한정보", a);
+                            intent.putExtra("수량정보", b);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"유통기한 정보와 수량정보를 입력해주세요",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 dlg.setNegativeButton("취소",null);
-
                 dlg.show();
 
                 return true;
@@ -146,7 +139,6 @@ public class Activity_3_2 extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
         });
