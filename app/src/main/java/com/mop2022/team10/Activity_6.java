@@ -1,6 +1,7 @@
 package com.mop2022.team10;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Activity_6 extends AppCompatActivity {
     private ArrayList<recommend> dataList6;
@@ -34,8 +36,8 @@ public class Activity_6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // ??으로 이동
-//                Intent intent = new Intent(getApplicationContext(), Activity_?.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), Activity_3.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -49,10 +51,23 @@ public class Activity_6 extends AppCompatActivity {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-
                 Recipe recipe = new Recipe();
-                for(int i=1;i<=10;i++) {
-                    RecipeModel result = recipe.getRecipeDetail(i);
+                //---------------------15개 난수 발생------------------------------------------
+                int count = 15; // 난수 생성 갯수
+                int a[] = new int[count];
+                Random r = new Random();
+                for(int i=0; i<count; i++){
+                    a[i] = r.nextInt(45)+1; // 1 ~ 46까지의 난수
+                    for(int j=0; j<i; j++){
+                        if(a[i] == a[j]){
+                            i--;
+                        }
+                    }
+                }
+                //-------------------------------------------------------
+                for(int i=0;i<count;i++) {
+                    int n = a[i];
+                    RecipeModel result = recipe.getRecipeDetail(n);
                     Bitmap img = recipe.getImg(result.img);
                     final int ind = i;
                     dataList6.add(new recommend(img, result.name, (float) result.difficulty, result.time, result.evaluation,result.id));
