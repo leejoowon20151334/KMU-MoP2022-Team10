@@ -141,6 +141,8 @@ public class TableFragment1 extends Fragment {
             LayoutInflater inflater1 = getActivity().getLayoutInflater();
             View layout_dlg = inflater1.inflate(R.layout.dialog,null);
             ImageView Img2 = (ImageView) layout_dlg.findViewById(R.id.imageView22);
+            EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
+            EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
             Img2.setLayoutParams(new LinearLayout.LayoutParams(400,400));
             Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Img2.setImageBitmap(img_list.get(index));
@@ -150,10 +152,6 @@ public class TableFragment1 extends Fragment {
             dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    LayoutInflater inflater1 = getActivity().getLayoutInflater();
-                    View layout_dlg = inflater1.inflate(R.layout.dialog,null);
-                    EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
-                    EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
                     String a = "";
                     if (et1.getText() != null)
                         a = et1.getText().toString();

@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 public class Activity_3_2 extends AppCompatActivity {
 
+    EditText et1, et2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,8 @@ public class Activity_3_2 extends AppCompatActivity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(Activity_3_2.this);
                 LayoutInflater inflater1 = getLayoutInflater();
                 View layout_dlg = inflater1.inflate(R.layout.dialog,null);
+                et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
+                et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
                 ImageView Img2 = (ImageView) layout_dlg.findViewById(R.id.imageView22);
                 Img2.setLayoutParams(new LinearLayout.LayoutParams(400,400));
                 Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -109,16 +113,8 @@ public class Activity_3_2 extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        LayoutInflater inflater1 = getLayoutInflater();
-                        View layout_dlg = inflater1.inflate(R.layout.dialog,null);
-                        EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
-                        EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
-                        String a = "";
-                        if (et1.getText() != null)
-                            a = et1.getText().toString();
-                        String b = "";
-                        if (et2.getText() != null)
-                            b = et2.getText().toString();
+                        String a = et1.getText().toString();
+                        String b = et2.getText().toString();
 
                         // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
                         if(a.length() > 0 && b.length() > 0) {
