@@ -166,6 +166,7 @@ public class TableFragment1 extends Fragment {
                         Intent intent = new Intent(getActivity().getApplicationContext(), Activity_3_1.class);
                         intent.putExtra("유통기한정보", a);
                         intent.putExtra("수량정보", b);
+                        intent.putExtra("식자재이름", projectId);
                         startActivity(intent);
                         getActivity().finish();
                     }

@@ -100,7 +100,7 @@ public class Activity_3_2 extends AppCompatActivity {
                 Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 Img2.setImageBitmap(ingredient.getImg(ingredientList2.get(ind).img));
                 dlg.setView(layout_dlg);
-                dlg.setTitle(filterIngredient + " 추가");
+                dlg.setTitle(ingredientList2.get(ind).name + " 추가");
 
 
                 Bundle bundle = new Bundle();
@@ -109,20 +109,24 @@ public class Activity_3_2 extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        EditText et1 = findViewById(R.id.editTextDate);
-                        EditText et2 = findViewById(R.id.editTextNumberSigned);
+                        LayoutInflater inflater1 = getLayoutInflater();
+                        View layout_dlg = inflater1.inflate(R.layout.dialog,null);
+                        EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
+                        EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
                         String a = "";
-                        if(et1.getText() != null)
+                        if (et1.getText() != null)
                             a = et1.getText().toString();
                         String b = "";
-                        if(et2.getText() != null)
+                        if (et2.getText() != null)
                             b = et2.getText().toString();
 
                         // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
                         if(a.length() > 0 && b.length() > 0) {
                             Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
+
                             intent.putExtra("유통기한정보", a);
                             intent.putExtra("수량정보", b);
+                            intent.putExtra("식자재이름",ingredientList2.get(ind).name);
                             startActivity(intent);
                             finish();
                         }
