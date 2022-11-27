@@ -144,7 +144,7 @@ public class Activity_2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String searchedRecipe = searchRecipe.getText().toString();
-                if(searchedRecipe.length()>0)
+                if(searchedRecipe.length()>=0)
                 {
                     Intent intent = new Intent(getApplicationContext(), Activity_4.class);
                     intent.putExtra("검색된레시피",searchedRecipe);
