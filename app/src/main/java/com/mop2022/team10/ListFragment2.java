@@ -99,6 +99,8 @@ public class ListFragment2 extends Fragment {
             LayoutInflater inflater1 = getActivity().getLayoutInflater();
             View layout_dlg = inflater1.inflate(R.layout.dialog,null);
             ImageView Img2 = (ImageView) layout_dlg.findViewById(R.id.imageView22);
+            EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
+            EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
             Img2.setLayoutParams(new LinearLayout.LayoutParams(400,400));
             Img2.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Img2.setImageBitmap(img_list.get(index));
@@ -108,8 +110,6 @@ public class ListFragment2 extends Fragment {
             dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    EditText et1 = (EditText) layout_dlg.findViewById(R.id.editTextDate);
-                    EditText et2 = (EditText) layout_dlg.findViewById(R.id.editTextNumberSigned);
                     String a = "";
                     if (et1.getText() != null)
                         a = et1.getText().toString();
@@ -122,6 +122,7 @@ public class ListFragment2 extends Fragment {
                         Intent intent = new Intent(getActivity().getApplicationContext(), Activity_3_1.class);
                         intent.putExtra("유통기한정보", a);
                         intent.putExtra("수량정보", b);
+                        intent.putExtra("식자재이름", projectId);
                         startActivity(intent);
                         getActivity().finish();
                     }

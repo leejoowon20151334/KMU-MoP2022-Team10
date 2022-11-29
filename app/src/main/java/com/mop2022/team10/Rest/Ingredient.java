@@ -85,7 +85,7 @@ public class Ingredient {
         val.put("ingredientId",Integer.toString(ingredientId));
         val.put("count",Double.toString(count));
         val.put("expire",expire.toString());
-        JSONObject result = rest.GET("/addFavorite",val);
+        JSONObject result = rest.GET("/addUserIngredient",val);
         try {
             Log.d("APItest",result.toString());
             String data = result.getString("data");

@@ -60,7 +60,6 @@ public class Activity_4 extends AppCompatActivity {
             @Override
             public void run() {
                 Recipe recipe = new Recipe();
-                // 임시로 40개만 넣었습니다
                 for (int i = 1; i <= 40; i++) {
                     RecipeModel result = recipe.getRecipeDetail(i);
                     Bitmap img = recipe.getImg(result.img);
@@ -81,7 +80,6 @@ public class Activity_4 extends AppCompatActivity {
                             ratingBar.setNumStars(5);
                             ratingBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                             ratingBar.setRating(result.difficulty);
-
 
 
                             ImageView testImg = new ImageView(Activity_4.this);
