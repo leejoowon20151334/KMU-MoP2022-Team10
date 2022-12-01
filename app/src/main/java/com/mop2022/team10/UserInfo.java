@@ -45,40 +45,40 @@ public class UserInfo extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog alertDialog;
         switch(v.getId()) {
-            case R.id.user_info_ChangeName:
-
-                builder.setTitle("이름변경").setMessage("");
-                final EditText input = new EditText(this);
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
-//                        input.getText();
-                        Thread t = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                User user = new User();
-                                userId = user.getUserId(name);
-//                                user.changeName(userId, String.valueOf(input.getText()));
-                            }
-                        });
-                        t.start();
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                alertDialog = builder.create();
-                alertDialog.show();
-                break;
+//            case R.id.user_info_ChangeName:
+//
+//                builder.setTitle("이름변경").setMessage("");
+//                final EditText input = new EditText(this);
+//                builder.setView(input);
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int id)
+//                    {
+//                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+////                        input.getText();
+//                        Thread t = new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                User user = new User();
+//                                userId = user.getUserId(name);
+////                                user.changeName(userId, String.valueOf(input.getText()));
+//                            }
+//                        });
+//                        t.start();
+//                    }
+//                });
+//
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int id)
+//                    {
+//                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//                alertDialog = builder.create();
+//                alertDialog.show();
+//                break;
             case R.id.user_info_Fush:
                 // 푸쉬 알림 관련 설정
 
@@ -136,7 +136,7 @@ public class UserInfo extends AppCompatActivity {
         TextView Title = findViewById(R.id.user_info_UserName);
         SharedPreferences pref = getSharedPreferences("userId", 0);
         name = pref.getString("userName", "");
-        Title.setText(name);
+//        Title.setText(name);
         Lay = findViewById(R.id.user_info_FirScrollView);
         Lay1 = findViewById(R.id.user_info_SecScrollView);
         Lay2 = findViewById(R.id.user_info_ThrScrollView);
