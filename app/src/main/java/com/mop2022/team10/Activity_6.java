@@ -243,4 +243,10 @@ public class Activity_6 extends AppCompatActivity {
             }
         });
     }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), Activity_2.class);
+        startActivity(intent);
+        finish();
+    }
 }

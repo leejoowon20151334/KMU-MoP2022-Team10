@@ -201,4 +201,10 @@ public class Activity_3_1 extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), Activity_2.class);
+        startActivity(intent);
+        finish();
+    }
 }
