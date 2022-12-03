@@ -23,7 +23,6 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Random;
 
 public class Activity_6 extends AppCompatActivity {
     private ArrayList<recommend> dataList6;
@@ -36,7 +35,7 @@ public class Activity_6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // ??으로 이동
-                Intent intent = new Intent(getApplicationContext(), Activity_3.class);
+                Intent intent = new Intent(getApplicationContext(), Activity_2.class);
                 startActivity(intent);
                 finish();
             }
@@ -51,23 +50,10 @@ public class Activity_6 extends AppCompatActivity {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 Recipe recipe = new Recipe();
-                //---------------------15개 난수 발생------------------------------------------
-                int count = 15; // 난수 생성 갯수
-                int a[] = new int[count];
-                Random r = new Random();
-                for(int i=0; i<count; i++){
-                    a[i] = r.nextInt(45)+1; // 1 ~ 46까지의 난수
-                    for(int j=0; j<i; j++){
-                        if(a[i] == a[j]){
-                            i--;
-                        }
-                    }
-                }
-                //-------------------------------------------------------
-                for(int i=0;i<count;i++) {
-                    int n = a[i];
-                    RecipeModel result = recipe.getRecipeDetail(n);
+                for(int i=1;i<=10;i++) {
+                    RecipeModel result = recipe.getRecipeDetail(i);
                     Bitmap img = recipe.getImg(result.img);
                     final int ind = i;
                     dataList6.add(new recommend(img, result.name, (float) result.difficulty, result.time, result.evaluation,result.id));
@@ -256,5 +242,11 @@ public class Activity_6 extends AppCompatActivity {
                 recommendAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), Activity_2.class);
+        startActivity(intent);
+        finish();
     }
 }

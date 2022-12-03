@@ -30,8 +30,11 @@ public class Activity_2 extends AppCompatActivity {
 
     ImageButton ManagementBtn;
 
+    private final long finishtimeed = 1000;
+    private long presstime = 0;
     int userId;
     String userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,39 +62,6 @@ public class Activity_2 extends AppCompatActivity {
         ImageButton recomRecipe = (ImageButton) findViewById(R.id.recommendedImg);
         TextView recomText = (TextView) findViewById(R.id.recommendText);
 
-        recomRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Recipe recipe = new Recipe();
-                        RecipeModel result;
-                        Random randomN = new Random();
-
-                        int id;
-                        while(true){
-                            id = randomN.nextInt(50);
-                            if(recipe.getRecipeDetail(id).name != null)
-                                break;
-                        }
-                        result = recipe.getRecipeDetail(id);
-                        Bitmap img = recipe.getImg(result.img);
-                        String txt = "오늘 메뉴는 " + result.name + " 어때요?";
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recomRecipe.setImageBitmap(img);
-                                recomText.setText(txt);
-                            }
-                        });
-                    }
-                });
-                t.start();
-            }
-        });
-
         /*
         유통기한이 가장 적게 남은 식자재 표시
          */
@@ -103,6 +73,20 @@ public class Activity_2 extends AppCompatActivity {
             public void run() {
                 Ingredient ingredient = new Ingredient();
                 ArrayList<IngredientModel> userIngredient = ingredient.userIngredient(userId);
+                Recipe recipe = new Recipe();
+                RecipeModel result;
+                Random randomN = new Random();
+
+                //랜덤으로 레시피 아이디를 선정
+                int id;
+                while(true){
+                    id = randomN.nextInt(50);
+                    if(recipe.getRecipeDetail(id).name != null)
+                        break;
+                }
+                result = recipe.getRecipeDetail(id);
+                Bitmap img = recipe.getImg(result.img);
+                String txt = "오늘 메뉴는 " + result.name + " 어때요?";
 
                 runOnUiThread(new Runnable() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -121,6 +105,8 @@ public class Activity_2 extends AppCompatActivity {
                                 shortExpirationDateBtn.setImageBitmap(ingredient.getImg(userIngredient.get(i).img));
                             }
                         }
+                        recomRecipe.setImageBitmap(img);
+                        recomText.setText(txt);
                     }
                 });
             }
@@ -137,20 +123,14 @@ public class Activity_2 extends AppCompatActivity {
         /*
         4.레시피 검색으로 이동
          */
-        EditText searchRecipe = (EditText) findViewById(R.id.searchTxt);
         ImageButton searchBtn = (ImageButton) findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String searchedRecipe = searchRecipe.getText().toString();
-                if(searchedRecipe.length()>=0)
-                {
-                    Intent intent = new Intent(getApplicationContext(), Activity_4.class);
-                    intent.putExtra("검색된레시피",searchedRecipe);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent = new Intent(getApplicationContext(), Activity_4.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -172,22 +152,6 @@ public class Activity_2 extends AppCompatActivity {
         });
 
 
-
-        /*
-        즐겨찾기로 이동
-         */
-
-        ImageButton goToFavorite = (ImageButton) findViewById(R.id.favorites);
-
-        goToFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UserInfo.class);
-                startActivity(intent);
-            }
-        });
-
-
         /*
         7.내 정보로 이동
          */
@@ -201,6 +165,18 @@ public class Activity_2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    public void onBackPressed(){
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - presstime;
+
+        if(0<=intervalTime && finishtimeed >= intervalTime) {
+            finish();
+        }
+        else{
+            presstime = tempTime;
+            Toast.makeText(getApplicationContext(),"한번 더 누르시면 앱이 종료됩니다",Toast.LENGTH_SHORT).show();
+        }
     }
 }
