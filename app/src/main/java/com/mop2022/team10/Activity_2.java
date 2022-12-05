@@ -93,9 +93,16 @@ public class Activity_2 extends AppCompatActivity {
                     @Override
                     public void run() {
                         //기본 식자재를 ArrayList의 0번 인덱스로 설정
-                        LocalDate minExpirationDate = userIngredient.get(0).expirationDate;
-                        nameOfSEDFood.setText(userIngredient.get(0).name);
-                        shortExpirationDateBtn.setImageBitmap(ingredient.getImg(userIngredient.get(0).img));
+                        LocalDate minExpirationDate;
+                        if(userIngredient.size() > 0) {
+                            minExpirationDate = userIngredient.get(0).expirationDate;
+                            nameOfSEDFood.setText(userIngredient.get(0).name);
+                            shortExpirationDateBtn.setImageBitmap(ingredient.getImg(userIngredient.get(0).img));
+                        }
+                        else{
+                            minExpirationDate = LocalDate.MIN;
+                            nameOfSEDFood.setText("없음");
+                        }
 
                         //남은 유통기한이 가장 짧은 기간의 식자재 구하기
                         for(int i=0; i<userIngredient.size(); i++){
