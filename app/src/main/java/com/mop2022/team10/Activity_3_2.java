@@ -3,6 +3,7 @@ package com.mop2022.team10;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -24,16 +25,22 @@ import androidx.fragment.app.FragmentTransaction;
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Activity_3_2 extends AppCompatActivity {
 
+    int userId;
     EditText et1, et2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_3_2);
+
+        SharedPreferences pref = getSharedPreferences("userId",0);
+        userId = pref.getInt("userId", 1);
 
         // 뒤로가기 버튼을 눌렀을 때
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
@@ -116,13 +123,24 @@ public class Activity_3_2 extends AppCompatActivity {
                         String a = et1.getText().toString();
                         String b = et2.getText().toString();
 
+                        LocalDate aa = LocalDate.parse(a);
+                        double bb = Double.parseDouble(b);
+
+
                         // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
                         if(a.length() > 0 && b.length() > 0) {
                             Intent intent = new Intent(getApplicationContext(), Activity_3_1.class);
 
-                            intent.putExtra("유통기한정보", a);
-                            intent.putExtra("수량정보", b);
-                            intent.putExtra("식자재이름",ingredientList2.get(ind).name);
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Ingredient ingredient = new Ingredient();
+                                    ingredient.addUserIngredient(userId, ingredientList2.get(ind).id, bb, aa);
+
+                                }
+                            });
+                            t.start();
+
                             startActivity(intent);
                             finish();
                         }

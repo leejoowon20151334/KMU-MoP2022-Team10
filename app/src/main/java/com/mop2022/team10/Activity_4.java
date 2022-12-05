@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +76,15 @@ public class Activity_4 extends AppCompatActivity {
                             text.setText(txt.toString());
                             text.setGravity(Gravity.CENTER);
 
+                            LinearLayout lll = new LinearLayout(Activity_4.this);
+                            lll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            lll.setOrientation(LinearLayout.HORIZONTAL);
+
+                            TextView text2 = new TextView(Activity_4.this);
+                            text2.setText("난이도:");
+                            text2.setGravity(Gravity.CENTER);
+                            text2.setLayoutParams(new LinearLayout.LayoutParams(250,150));
+
                             RatingBar ratingBar = new RatingBar(Activity_4.this);
                             ratingBar.setIsIndicator(true);
                             ratingBar.setNumStars(5);
@@ -82,14 +92,19 @@ public class Activity_4 extends AppCompatActivity {
                             ratingBar.setRating(result.difficulty);
 
 
+
+
                             ImageView testImg = new ImageView(Activity_4.this);
                             testImg.setImageBitmap(img);
                             testImg.setTag(id);
                             testImg.setOnClickListener(myListener);
 
+                            lll.addView(text2);
+                            lll.addView(ratingBar);
+
                             LL4.addView(text);
                             LL4.addView(testImg);
-                            LL4.addView(ratingBar);
+                            LL4.addView(lll);
                         }
                     });
                 }
@@ -106,38 +121,5 @@ public class Activity_4 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-//        Button sort_btn = (Button) findViewById(R.id.sort_button);
-//        sort_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                final PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
-//                getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
-//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    // 팝업메뉴 클릭시
-//                    public boolean onMenuItemClick(MenuItem menuItem) {
-//                        if (menuItem.getItemId() == R.id.action_menu1) {
-//                            Toast.makeText(Activity_4.this, "오름차순", Toast.LENGTH_SHORT).show();
-//                        } else if (menuItem.getItemId() == R.id.action_menu2) {
-//                            Toast.makeText(Activity_4.this, "내림차순", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(Activity_4.this, "별점순", Toast.LENGTH_SHORT).show();
-//                        }
-//                        return false;
-//                    }
-//                });
-//                popupMenu.show();
-//            }
-//        });
-
-
-    }
-
-    public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), Activity_2.class);
-        startActivity(intent);
-        finish();
     }
 }
