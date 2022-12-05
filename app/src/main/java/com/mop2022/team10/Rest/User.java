@@ -42,6 +42,22 @@ public class User {
         return 0;
     }
 
+    //회원탈퇴 : 성공시 true 반환
+    public boolean deleteUser(int userId){
+        HashMap<String,String> val = new HashMap<>();
+        val.put("userId",Integer.toString(userId));
+        JSONObject result = rest.GET("/deleteUser",val);
+        Log.d("APItest",result.toString());
+        try {
+            String data = result.getString("data");
+            if(data.equals("success"))
+                return true;
+        }catch (Exception e){
+            Log.d("Rest/User/deleteUser",e.toString());
+        }
+        return false;
+    }
+
     //회원번호 : 0일경우 실패(없는 회원), 그외일 경우 userid(int)
     public int getUserId(String ssaid) {
         HashMap<String,String> val = new HashMap<>();
