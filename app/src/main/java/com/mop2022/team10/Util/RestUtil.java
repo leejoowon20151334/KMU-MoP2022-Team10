@@ -23,7 +23,7 @@ public class RestUtil {
     private final String host = "http://dev.pinkbean.kr:8000";
     //private final String host = "http://10.0.2.2:8081";
     private final String imgHost = "https://drive.google.com/uc?export=view&id=";
-
+    private final String deeplearningHost = "http://dev.pinkbean.kr:8004";
     public JSONObject GET(String src, HashMap<String,String> param){
         StringBuilder urlStr = new StringBuilder(host + src + "?");
         for(String k : param.keySet()){
@@ -70,6 +70,38 @@ public class RestUtil {
             Bitmap img = BitmapFactory.decodeStream(is);
             conn.disconnect();
             return img;
+        }catch (Exception e){
+            Log.d("Rest error : ",e.toString());
+        }
+        return null;
+    }
+
+    public JSONObject getImageInfo(String param){
+        StringBuilder urlStr = new StringBuilder(deeplearningHost + "?data="+param);
+        Log.d("URLTEST", param);
+        String response = "";
+        try {
+            URL url = new URL(urlStr.toString());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            //conn.setConnectTimeout(5000);
+            //conn.setReadTimeout(5000);
+            conn.setDoInput(true);
+            Charset charset = StandardCharsets.UTF_8;
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
+            String inputLine;
+            StringBuffer sb = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            br.close();
+
+            response = sb.toString();
+            conn.disconnect();
+            Log.d(response, "getImageInfo: ");
+            return parse(response);
         }catch (Exception e){
             Log.d("Rest error : ",e.toString());
         }
