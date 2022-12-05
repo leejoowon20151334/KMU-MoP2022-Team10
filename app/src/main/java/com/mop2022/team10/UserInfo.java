@@ -1,6 +1,7 @@
 package com.mop2022.team10;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -195,7 +196,6 @@ public class UserInfo extends AppCompatActivity {
         Lay2 = findViewById(R.id.user_info_ThrScrollView);
 
 
-
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -246,6 +246,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
 
                         for(int i = 0;i < result1.size(); i++) {
@@ -277,6 +286,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result1.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
 
                         for(int i = 0;i < result2.size(); i++) {
@@ -308,6 +326,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result2.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     }
                 });
