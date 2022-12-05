@@ -21,8 +21,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 import com.mop2022.team10.Rest.Model.RecipeModel;
@@ -88,7 +92,31 @@ public class UserInfo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                        FirebaseMessaging.getInstance().getToken()
+                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+                                        if (!task.isSuccessful()) {
+                                            System.out.println( "Fetching FCM registration token failed");
+                                            return;
+                                        }
+
+                                        // Get new FCM registration token
+                                        String token = task.getResult();
+                                        // Log and toast
+                                        Log.d("Token", token);
+                                        Toast.makeText(getApplicationContext(), "푸쉬알림을 활성화 했습니다", Toast.LENGTH_SHORT).show();
+                                        Thread t = new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                User user = new User();
+                                                user.pushOn(userId, token);
+                                            }
+                                        });
+                                        t.start();
+
+                                    }
+                                });
                     }
                 });
 
@@ -96,7 +124,15 @@ public class UserInfo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "푸쉬알림을 비활성화 했습니다.", Toast.LENGTH_SHORT).show();
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                User user = new User();
+                                user.pushOff(userId);
+                            }
+                        });
+                        t.start();
                     }
                 });
 
