@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mop2022.team10.Rest.User;
 
+import java.util.Random;
+
 public class Activity_1 extends AppCompatActivity {
 
     String ssaid;
@@ -33,8 +35,10 @@ public class Activity_1 extends AppCompatActivity {
             public void run() {
                 User user = new User();
                 if(user.signUp(ssaid) == 0) {
-                    userId = 1;
-                    userName = "test";
+                    String randomId = getRandomId();
+                    user.signUp(randomId);
+                    userId = user.getUserId(randomId);
+                    userName = "김철수";
                 }
                 else{
                     userId = user.getUserId(ssaid);
@@ -57,6 +61,17 @@ public class Activity_1 extends AppCompatActivity {
         }, 1500);
 
 
+    }
+    public static String getRandomId(){
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 40;
+        Random random = new Random();
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        return generatedString;
     }
 
 }
