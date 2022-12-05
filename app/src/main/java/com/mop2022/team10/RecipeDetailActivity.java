@@ -1,6 +1,7 @@
 
 package com.mop2022.team10;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -33,6 +34,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 import com.mop2022.team10.Rest.Model.RecipeModel;
@@ -54,6 +58,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private int recipeId;
     private int userId;
     private TextView titleText;
+    private ImageView backBtnImg;
     private ImageView recipeImg;
     private TextView evaluation;
     private TextView description;
@@ -82,6 +87,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             userId = 1;
 
         titleText = findViewById(R.id.recipeDetail_titleText);
+        backBtnImg = findViewById(R.id.recipeDetail_backBtn);
         recipeImg = findViewById(R.id.recipeDetail_recipeImg);
         evaluation = findViewById(R.id.recipeDetail_evaluation);
         description = findViewById(R.id.recipeDetail_description);
@@ -207,6 +213,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
         t.start();
+
+        backBtnImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         favorite.setOnClickListener(new View.OnClickListener(){
             @Override
