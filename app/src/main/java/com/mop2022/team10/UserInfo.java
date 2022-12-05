@@ -141,13 +141,30 @@ public class UserInfo extends AppCompatActivity {
                 break;
             case R.id.user_info_Withdrawal:
                 //회원탈퇴 버튼
-                builder.setTitle("회원 탈퇴").setMessage("정말 탈퇴 하시겠습니까?.");
+                builder.setTitle("회원 탈퇴").setMessage("탈퇴시 앱이 종료됩니다. \n정말 탈퇴 하시겠습니까?.");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                User user = new User();
+                                user.deleteUser(userId);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
+                                        moveTaskToBack(true);
+                                        finishAndRemoveTask();
+                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                    }});
+                            }
+                        });
+                        t.start();
+
+
                     }
                 });
 
