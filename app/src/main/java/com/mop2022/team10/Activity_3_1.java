@@ -3,6 +3,7 @@ package com.mop2022.team10;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -59,10 +60,8 @@ public class Activity_3_1 extends AppCompatActivity {
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton1);
 //------------------유저 아이디 인텐트로 받아오기----------------------------------------
 
-        if(getIntent().hasExtra("userId"))
-            userId = (int) getIntent().getExtras().get("userId");
-        else
-            userId = 1;
+        SharedPreferences pref = getSharedPreferences("userId",0);
+        userId = pref.getInt("userId", 1);
 //--------------------------------------------------------------
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

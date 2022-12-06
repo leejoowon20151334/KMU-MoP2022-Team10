@@ -43,7 +43,6 @@ public class UserInfo extends AppCompatActivity {
     private LinearLayout Lay;
     private LinearLayout Lay1;
     private LinearLayout Lay2;
-    String name;
     int userId;
 
     public void userInfoOnClick(View v) {
@@ -159,9 +158,9 @@ public class UserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         TextView Title = findViewById(R.id.user_info_UserName);
-        SharedPreferences pref = getSharedPreferences("userId", 0);
-        name = pref.getString("userName", "");
-//        Title.setText(name);
+        SharedPreferences pref = getSharedPreferences("userId",0);
+        userId = pref.getInt("userId", 1);
+        //        Title.setText(name);
         Lay = findViewById(R.id.user_info_FirScrollView);
         Lay1 = findViewById(R.id.user_info_SecScrollView);
         Lay2 = findViewById(R.id.user_info_ThrScrollView);
@@ -171,7 +170,7 @@ public class UserInfo extends AppCompatActivity {
             @Override
             public void run() {
                 User user = new User();
-                userId = user.getUserId(name);
+                Log.d("UserId", Integer.toString(userId));
                 Recipe recipe = new Recipe();
                 ArrayList<RecipeModel> result = recipe.getFavorite(userId);
 //                Bitmap img = recipe.getImg(result.img);userSearchLog
