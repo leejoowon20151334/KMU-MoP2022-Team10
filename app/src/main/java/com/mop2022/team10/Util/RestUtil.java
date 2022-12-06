@@ -7,11 +7,14 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -76,34 +79,55 @@ public class RestUtil {
         return null;
     }
 
-    public JSONObject getImageInfo(String param){
-        StringBuilder urlStr = new StringBuilder(deeplearningHost + "?data="+param);
-        Log.d("URLTEST", param);
+    public String getImageInfo(byte[] bytes){
+        final String boundary = "*****";
+        final String crlf = "\r\n";
+        final String twoHyphens = "--";
         String response = "";
         try {
-            URL url = new URL(urlStr.toString());
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-            //conn.setConnectTimeout(5000);
-            //conn.setReadTimeout(5000);
-            conn.setDoInput(true);
-            Charset charset = StandardCharsets.UTF_8;
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+            URL url = new URL("http://dev.pinkbean.kr:8004/");
+            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 
-            String inputLine;
-            StringBuffer sb = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                sb.append(inputLine);
+            httpConn.setUseCaches(false);
+            httpConn.setDoOutput(true);
+            httpConn.setDoInput(true);
+            httpConn.setRequestMethod("POST");
+            httpConn.setRequestProperty("Connection", "Keep-Alive");
+            httpConn.setRequestProperty("Cache-Control", "no-cache");
+            httpConn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+
+
+            OutputStream httpConnOutputStream = httpConn.getOutputStream();
+            DataOutputStream request = new DataOutputStream(httpConnOutputStream);
+
+
+
+            request.writeBytes(twoHyphens + boundary + crlf);
+            request.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"Alice_Photo.jpeg\"" + crlf);
+            request.writeBytes("Content-Type: image/jpeg" + crlf);
+            request.writeBytes(crlf);
+            request.write(bytes);
+
+            request.writeBytes(crlf);
+            request.writeBytes(twoHyphens + boundary +
+                    twoHyphens + crlf);
+            request.flush();
+            request.close();
+
+            InputStream responseStream = new BufferedInputStream(httpConn.getInputStream());
+            BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
+            String line = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((line = responseStreamReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
             }
-            br.close();
+            responseStreamReader.close();
 
-            response = sb.toString();
-            conn.disconnect();
-            Log.d(response, "getImageInfo: ");
-            return parse(response);
-        }catch (Exception e){
-            Log.d("Rest error : ",e.toString());
+//            Log.d("response", stringBuilder.toString());
+            response = stringBuilder.toString();
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
