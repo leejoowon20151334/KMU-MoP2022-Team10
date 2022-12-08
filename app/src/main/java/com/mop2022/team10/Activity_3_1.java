@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -27,13 +28,27 @@ import com.mop2022.team10.Util.RestUtil;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class Activity_3_1 extends AppCompatActivity {
     private ArrayList<food> dataList;
@@ -43,9 +58,10 @@ public class Activity_3_1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_3_1);
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton1);
-//------------------유저 아이디 받아오기----------------------------------------
+//------------------유저 아이디 인텐트로 받아오기----------------------------------------
+
         SharedPreferences pref = getSharedPreferences("userId",0);
-        userId = pref.getInt("userId",1);
+        userId = pref.getInt("userId", 1);
 //--------------------------------------------------------------
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +112,7 @@ public class Activity_3_1 extends AppCompatActivity {
         cameraBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                sendTakePhotoIntent();
+                getGall();
 
                 myAdapter.notifyDataSetChanged();
             }
@@ -157,6 +173,13 @@ public class Activity_3_1 extends AppCompatActivity {
         });
         t.start();
     }
+    //갤러리 실행
+    private void getGall() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 101);
+    }
     //기본 카메라앱 실행
     private void sendTakePhotoIntent() {
         try {
@@ -172,30 +195,42 @@ public class Activity_3_1 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 101 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
+//            Bundle extras = data.getExtras();
+            InputStream in = null;
+            try {
+                in = getContentResolver().openInputStream(data.getData());
+            Bitmap imageBitmap = BitmapFactory.decodeStream(in);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , blob);
+            byte[] bytes= blob.toByteArray();
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    RestUtil rs = new RestUtil();
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
-                    byte[] bytes = baos.toByteArray();
-                    String imgStr = Base64.encodeToString(bytes, Base64.DEFAULT);
-                    JSONObject result = rs.PostImg("/imageRecognition",imgStr);
-                    if(result != null) {
-                        try {
-                            String data = result.getString("data");
-                            if(data.equals("success"))
-                                Log.d("APItest", "success");
-                        }catch (Exception e){
-                            Log.d("APItest","fail");
-                        }
-                    }else
-                        Log.d("APItest","fail");
+                    RestUtil util = new RestUtil();
+                    String str = util.getImageInfo(bytes);
+                    str = str.replaceAll("\\{", "");
+                    str = str.replaceAll("\\}", "");
+                    str = str.replaceAll(" ", "");
+                    str = str.replaceAll("\n", "");
+                    String[] strs = str.split(",");
+                    Ingredient ingredient = new Ingredient();
+                    LocalDate expire = LocalDate.now().with(temporal -> temporal.plus(15, ChronoUnit.DAYS));
+                    if(str.length() > 0)
+                    for(int i = 0; i < strs.length; i++) {
+                        Log.d(expire.toString(), Integer.toString(userId) );
+                        ingredient.addUserIngredient(userId,
+                                Integer.parseInt(strs[i].split(":")[0]),
+                                (double)Integer.parseInt(strs[i].split(":")[1]),
+                                expire);
+                    }
+                    Log.d("onActivityResult", str);
+
                 }
             });
             t.start();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

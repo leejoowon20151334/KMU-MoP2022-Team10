@@ -1,6 +1,7 @@
 package com.mop2022.team10;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,8 +22,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 import com.mop2022.team10.Rest.Model.RecipeModel;
@@ -38,46 +43,16 @@ public class UserInfo extends AppCompatActivity {
     private LinearLayout Lay;
     private LinearLayout Lay1;
     private LinearLayout Lay2;
-    String name;
     int userId;
 
     public void userInfoOnClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog alertDialog;
         switch(v.getId()) {
+            case  R.id.user_info_back:
+                onBackPressed();
+                break;
 //            case R.id.user_info_ChangeName:
-//
-//                builder.setTitle("이름변경").setMessage("");
-//                final EditText input = new EditText(this);
-//                builder.setView(input);
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id)
-//                    {
-//                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
-////                        input.getText();
-//                        Thread t = new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                User user = new User();
-//                                userId = user.getUserId(name);
-////                                user.changeName(userId, String.valueOf(input.getText()));
-//                            }
-//                        });
-//                        t.start();
-//                    }
-//                });
-//
-//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id)
-//                    {
-//                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//                alertDialog = builder.create();
-//                alertDialog.show();
 //                break;
             case R.id.user_info_Fush:
                 // 푸쉬 알림 관련 설정
@@ -88,7 +63,31 @@ public class UserInfo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                        FirebaseMessaging.getInstance().getToken()
+                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+                                        if (!task.isSuccessful()) {
+                                            System.out.println( "Fetching FCM registration token failed");
+                                            return;
+                                        }
+
+                                        // Get new FCM registration token
+                                        String token = task.getResult();
+                                        // Log and toast
+                                        Log.d("Token", token);
+                                        Toast.makeText(getApplicationContext(), "푸쉬알림을 활성화 했습니다", Toast.LENGTH_SHORT).show();
+                                        Thread t = new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                User user = new User();
+                                                user.pushOn(userId, token);
+                                            }
+                                        });
+                                        t.start();
+
+                                    }
+                                });
                     }
                 });
 
@@ -96,7 +95,15 @@ public class UserInfo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "푸쉬알림을 비활성화 했습니다.", Toast.LENGTH_SHORT).show();
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                User user = new User();
+                                user.pushOff(userId);
+                            }
+                        });
+                        t.start();
                     }
                 });
 
@@ -105,13 +112,30 @@ public class UserInfo extends AppCompatActivity {
                 break;
             case R.id.user_info_Withdrawal:
                 //회원탈퇴 버튼
-                builder.setTitle("회원 탈퇴").setMessage("정말 탈퇴 하시겠습니까?.");
+                builder.setTitle("회원 탈퇴").setMessage("탈퇴시 앱이 종료됩니다. \n정말 탈퇴 하시겠습니까?.");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        Toast.makeText(getApplicationContext(), "OK Click", Toast.LENGTH_SHORT).show();
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                User user = new User();
+                                user.deleteUser(userId);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
+                                        moveTaskToBack(true);
+                                        finishAndRemoveTask();
+                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                    }});
+                            }
+                        });
+                        t.start();
+
+
                     }
                 });
 
@@ -134,20 +158,19 @@ public class UserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         TextView Title = findViewById(R.id.user_info_UserName);
-        SharedPreferences pref = getSharedPreferences("userId", 0);
-        name = pref.getString("userName", "");
-//        Title.setText(name);
+        SharedPreferences pref = getSharedPreferences("userId",0);
+        userId = pref.getInt("userId", 1);
+        //        Title.setText(name);
         Lay = findViewById(R.id.user_info_FirScrollView);
         Lay1 = findViewById(R.id.user_info_SecScrollView);
         Lay2 = findViewById(R.id.user_info_ThrScrollView);
-
 
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 User user = new User();
-                userId = user.getUserId(name);
+                Log.d("UserId", Integer.toString(userId));
                 Recipe recipe = new Recipe();
                 ArrayList<RecipeModel> result = recipe.getFavorite(userId);
 //                Bitmap img = recipe.getImg(result.img);userSearchLog
@@ -193,6 +216,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
 
                         for(int i = 0;i < result1.size(); i++) {
@@ -224,6 +256,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result1.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
 
                         for(int i = 0;i < result2.size(); i++) {
@@ -255,6 +296,15 @@ public class UserInfo extends AppCompatActivity {
                             view.setTextColor(Color.rgb(0,0,0));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                             la.addView(view);
+                            int recipeId = result2.get(i).id;
+                            la.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
+                                    intent.putExtra("recipeId",recipeId);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     }
                 });

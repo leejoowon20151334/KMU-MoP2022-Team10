@@ -2,6 +2,7 @@ package com.mop2022.team10;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -25,11 +26,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.mop2022.team10.Rest.Ingredient;
 import com.mop2022.team10.Rest.Model.IngredientModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ListFragment2 extends Fragment {
     private View view;
     private Button btn_frag1;
+    int userId;
+
     ArrayList<Bitmap> img_list = new ArrayList<>();
     ArrayList<IngredientModel> ingredient_test = new ArrayList<>();
     @Nullable
@@ -37,6 +41,9 @@ public class ListFragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.list_fragment2, container, false);
         btn_frag1 = view.findViewById(R.id.btn_icon2);
+
+        SharedPreferences pref = getActivity().getSharedPreferences("userId",0);
+        userId = pref.getInt("userId", 1);
 
         if(getArguments() != null) {
             ingredient_test = (ArrayList<IngredientModel>) getArguments().getSerializable("ingredient");
@@ -91,7 +98,7 @@ public class ListFragment2 extends Fragment {
         @Override
         public void onClick(View v) {
             String projectId = v.getTag(R.id.name_string).toString();
-            int index = (int) v.getTag(R.id.number);
+            final int index = (int) v.getTag(R.id.number);
 
             Toast.makeText(getActivity().getApplicationContext(),projectId,Toast.LENGTH_SHORT).show();
 
@@ -110,19 +117,26 @@ public class ListFragment2 extends Fragment {
             dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    String a = "";
-                    if (et1.getText() != null)
-                        a = et1.getText().toString();
-                    String b = "";
-                    if (et2.getText() != null)
-                        b = et2.getText().toString();
+                    String a = et1.getText().toString();
+                    String b = et2.getText().toString();
+
+                    LocalDate aa = LocalDate.parse(a);
+                    double bb = Double.parseDouble(b);
 
                     // 추가버튼 눌렀을 때, 지정한 유통기한과 수량정보 전달
                     if (a.length() > 0 && b.length() > 0) {
                         Intent intent = new Intent(getActivity().getApplicationContext(), Activity_3_1.class);
-                        intent.putExtra("유통기한정보", a);
-                        intent.putExtra("수량정보", b);
-                        intent.putExtra("식자재이름", projectId);
+
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Ingredient ingredient = new Ingredient();
+                                ingredient.addUserIngredient(userId, ingredient_test.get(index).id, bb, aa);
+
+                            }
+                        });
+                        t.start();
+
                         startActivity(intent);
                         getActivity().finish();
                     }

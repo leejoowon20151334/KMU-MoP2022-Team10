@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <ImageButton
+        android:id="@+id/user_info_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="BACK"
+        android:minHeight="48dp"
+        android:onClick="userInfoOnClick"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <TextView
         android:id="@+id/user_info_UserName"
@@ -12,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="28sp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="24dp"
         android:text="내정보"/>
 
@@ -58,49 +68,56 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
+
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_weight="1"
-            >
+            android:orientation="vertical"
+            tools:ignore="SpeakableTextPresentCheck">
+
             <LinearLayout
                 android:id="@+id/user_info_FirScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="top"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:orientation="vertical" />
 
         </ScrollView>
+
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="6dp">
+            android:orientation="vertical"
+            android:padding="6dp"
+            tools:ignore="SpeakableTextPresentCheck">
+
             <LinearLayout
                 android:id="@+id/user_info_SecScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="top"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:orientation="vertical" />
         </ScrollView>
+
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:padding="6dp"
-            >
+            tools:ignore="SpeakableTextPresentCheck">
+
             <LinearLayout
                 android:id="@+id/user_info_ThrScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="top"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:orientation="vertical" />
         </ScrollView>
     </LinearLayout>
 
