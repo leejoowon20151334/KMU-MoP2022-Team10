@@ -44,15 +44,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     int pos = getAdapterPosition();
                     food fooddata;
                     fooddata = myDataList.get(pos);
-                    Intent intent = new Intent(context, Popup_3_1.class);
+                    Intent intent = new Intent(context, ingredientPopup.class);
+//                    Intent intent = new Intent(context, ingredientPopup.class);
                     intent.putExtra("name",fooddata.getFoodName());
-                    intent.putExtra("image",fooddata.getImageResource());
+//                    intent.putExtra("image",fooddata.getImageResource());
+
+                    intent.putExtra("position",pos);
                     intent.putExtra("count",fooddata.getCount());
                     intent.putExtra("unit",fooddata.getUnit());
                     intent.putExtra("year",fooddata.getExperationDate().getYear());
                     intent.putExtra("month",fooddata.getExperationDate().getMonthValue());
                     intent.putExtra("day",fooddata.getExperationDate().getDayOfMonth());
                     context.startActivity(intent);
+//                    Intent intent = new Intent(context,MainActivity.class);
+//                    context.startActivity(intent);
                 }
             });
         }
