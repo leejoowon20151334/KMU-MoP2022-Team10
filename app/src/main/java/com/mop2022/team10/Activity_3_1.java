@@ -58,7 +58,7 @@ public class Activity_3_1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_3_1);
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton1);
-//------------------유저 아이디 인텐트로 받아오기----------------------------------------
+//------------------유저 아이디  받아오기----------------------------------------
 
         SharedPreferences pref = getSharedPreferences("userId",0);
         userId = pref.getInt("userId", 1);
@@ -76,7 +76,7 @@ public class Activity_3_1 extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 3으로 이동
+
                 Intent intent = new Intent(getApplicationContext(), Activity_3_2.class);
                 startActivity(intent);
                 finish();
@@ -94,29 +94,30 @@ public class Activity_3_1 extends AppCompatActivity {
         //기타 로직
 
 
-
-        String[] permissions = {
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
-
-        //카메라 호출 버튼
-        Button cameraBtn = (Button) findViewById(R.id.camera);
-
-        //촬영한 사진 관련 permission check
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, permissions, 1);
-
-        //카메라 호출 버튼 클릭시 작동
-        cameraBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                getGall();
-
-                myAdapter.notifyDataSetChanged();
-            }
-        });
+//
+//        String[] permissions = {
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        };
+//
+//        //카메라 호출 버튼
+//        Button cameraBtn = (Button) findViewById(R.id.camera);
+//
+//        //촬영한 사진 관련 permission check
+//        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+//        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
+//            ActivityCompat.requestPermissions(this, permissions, 1);
+//
+//        //카메라 호출 버튼 클릭시 작동
+//        cameraBtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                getGall();
+//                myAdapter.notifyDataSetChanged();
+//
+//            }
+//
+//        });
 //-------------------------------카메라 끝-------------------------------------------------------
 //        Context context = this;
 //        dataList = new ArrayList<>();
@@ -172,7 +173,32 @@ public class Activity_3_1 extends AppCompatActivity {
             }
         });
         t.start();
+
+        String[] permissions = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        //카메라 호출 버튼
+        Button cameraBtn = (Button) findViewById(R.id.camera);
+
+        //촬영한 사진 관련 permission check
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, permissions, 1);
+
+        //카메라 호출 버튼 클릭시 작동
+        cameraBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getGall();
+                myAdapter.notifyDataSetChanged();
+
+            }
+
+        });
     }
+
     //갤러리 실행
     private void getGall() {
         Intent intent = new Intent();
