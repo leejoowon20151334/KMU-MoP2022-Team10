@@ -34,11 +34,16 @@ public class Activity_1 extends AppCompatActivity {
             @Override
             public void run() {
                 User user = new User();
-                if(user.signUp(ssaid) == 0) {
+                if(pref.getInt("userId",-1)!=-1)
+                {
+                    userId = pref.getInt("userId",1);
+                    userName = "모바일 팀 10";
+                }
+                else if(user.signUp(ssaid) == 0) {
                     String randomId = getRandomId();
                     user.signUp(randomId);
                     userId = user.getUserId(randomId);
-                    userName = "김철수";
+                    userName = "모바일 팀 10";
                 }
                 else{
                     userId = user.getUserId(ssaid);
