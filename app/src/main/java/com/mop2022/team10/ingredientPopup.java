@@ -51,13 +51,14 @@ public class ingredientPopup extends Activity {
                 //---------------------------
                 IngredientModel data = ingredientList.get(pos);
                 Bitmap img = ingredient.getImg(ingredientList.get(pos).img);
-                imageView_popup1.setImageBitmap(img);
+
 
 
                 //해당 사용자의 식자재 목록 반환
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        imageView_popup1.setImageBitmap(img);
                     }
                 });
 
